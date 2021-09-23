@@ -1,9 +1,11 @@
 // ConsoleApplication1.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
+
 #include "pch.h"
 #include <iostream>
 #include "Toto.h"
+#include "IntArray.hpp"
 
 namespace Oui
 {
@@ -81,7 +83,8 @@ int main()
 	return 0;
 }*/
 
-struct Vec4 {
+
+/*struct Vec4 {
 	float x = 1;
 	float y = 1;
 	float z = 1;
@@ -141,5 +144,23 @@ int main()
 	
 
 	printf("%f %f %f %f", res.x,res.y,res.z,res.w);
+	return 0;
+}*/
+
+int main()
+{
+	IntArray bob;
+
+	for (int i = 0; i < 16; i++)
+	{
+		bob.set(i, i * i);
+	}
+	for (int i = 0; i < 16; i++)
+	{
+		printf("%d", bob.get(i));
+	}
+
+	printf("\n");
+
 	return 0;
 }

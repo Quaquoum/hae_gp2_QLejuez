@@ -1,3 +1,2 @@
 ﻿  ConsoleApplication1.cpp
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(140): error C2440: 'initialisation' : impossible de convertir de 'void' en 'Vec4'
-  d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(140): note: Les expressions de type void ne peuvent pas être converties en d'autres types
+  ConsoleApplication1.vcxproj -> D:\Program files (Data)\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\1 - Cours 21-09-21\ConsoleApplication1\Debug\ConsoleApplication1.exe
