@@ -147,23 +147,32 @@ int main()
 	return 0;
 }*/
 
+int Countc(const char* maChaine, char c)
+{
+	//int size = strlen(maChaine);
+	int size = 0;
+	while (maChaine[size] != 0)
+	{
+		size = size + 1;
+	}
+
+	int nb = 0;
+
+	for(int i = 0; i < size; i++)
+	{
+		if (maChaine[i] == c)
+		{
+			nb = nb + 1;
+		}
+	}
+	return nb;
+}
+
 int main()
 {
-	int* bobData = nullptr;
-	{
-		IntArray bob(16);
+	int nbA = Countc("sapin", 'a');
 
-		for (int i = 0; i < 16; i++)
-		{
-			bob.set(i, i * i);
-		}
-		for (int i = 0; i < 16; i++)
-		{
-			printf("%d", bob.get(i));
-		}
+	printf("nombre de a: %d", nbA);
 
-		printf("\n");
-
-		return 0;
-	}
+	return 0;
 }
