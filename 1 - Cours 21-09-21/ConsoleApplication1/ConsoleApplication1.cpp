@@ -54,7 +54,7 @@ namespace Oui
 	//incrementer la valeur
 	//incremente c et prend le contenu
 
-	//printf("%d", *c++); //incremente c et prend le contenu - 0 303
+	//printf("%d", *c++); //incremente c et prend le contenu - 0 39
 	//printf("%d", (*c)++); // prend le contenu de c et incremente le - 0
 	//printf("%d", *++c); //incremente c et prend le contenu - 1
 	printf("%d", ++*c); // prend le contenu de c et incremente le - 1
@@ -149,18 +149,21 @@ int main()
 
 int main()
 {
-	IntArray bob;
-
-	for (int i = 0; i < 16; i++)
+	int* bobData = nullptr;
 	{
-		bob.set(i, i * i);
-	}
-	for (int i = 0; i < 16; i++)
-	{
-		printf("%d", bob.get(i));
-	}
+		IntArray bob(16);
 
-	printf("\n");
+		for (int i = 0; i < 16; i++)
+		{
+			bob.set(i, i * i);
+		}
+		for (int i = 0; i < 16; i++)
+		{
+			printf("%d", bob.get(i));
+		}
 
-	return 0;
+		printf("\n");
+
+		return 0;
+	}
 }
