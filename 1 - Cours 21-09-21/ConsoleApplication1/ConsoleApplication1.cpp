@@ -178,15 +178,19 @@ int main()
 	return 0;
 }*/
 
-MyLinkedList linkedList = 1;
+int main()
+{
+	MyLinkedList linkedList = 1;
 
-linkedList.AddFirst(1);
-linkedList.AddLast(2);
-linkedList.AddLast(3);
-linkedList.AddLast(67);
-linkedList.AddLast(67);
-linkedList.AddFirst(84);
-linkedList.AddAfter(12, 40);
-printf("%d", linkedList.FindFirst(67));
+	linkedList.AddFirst(1);
+	linkedList.AddLast(2);
+	linkedList.AddLast(3);
+	linkedList.AddLast(67);
+	linkedList.AddLast(67);
+	linkedList.AddFirst(84);
+	linkedList.AddAfter(12, 40);
+	printf("%d", linkedList.FindFirst(67));
 
-linkedList.PrintList();
+	linkedList.PrintList();
+	return 0;
+}
