@@ -245,6 +245,8 @@ int main()
 	toto.insertAt(1,50);
 	toto.insertAt(1,100);
 	toto.insertAt(10,25);
+	toto.insertAt(10, 1);
+	toto.insertAt(14, 2);
 	toto.qsort();
 	toto.printArray();
 	return 0;
@@ -253,6 +255,7 @@ int main()
 
 static int cmp(const void * v0, const void * v1)
 {
+	//return *(int*)v0 * *(int*)v1;
 	if (*(int*)v1 < *(int*)v0) return 1;
 	if (*(int*)v1 > *(int*)v0) return -1;
 	return 0;
