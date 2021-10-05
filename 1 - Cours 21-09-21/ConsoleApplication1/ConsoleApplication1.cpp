@@ -165,6 +165,7 @@ int main()
 	return 0;
 }*/
 
+/*
 int Countc(const char* maChaine, char c)
 {
 	//int size = strlen(maChaine);
@@ -215,7 +216,7 @@ void Strncpy(char* dst, int nb, const char* src)
 		dst++;
 		src++;
 	}
-	*dst = 0;*/
+	*dst = 0;
 
 }
 
@@ -231,5 +232,17 @@ int main()
 	printf("copie %s", chaine);
 
 	return 0;
+}*/
+
+int main()
+{
+	IntArray toto(16);
+	for (int i = 0; i < 16; i++)
+		toto.set(i, i);
+	 
+	toto.insertAt(10, 1000);
+	toto.printArray();
+	return 0;
+
 }
 
