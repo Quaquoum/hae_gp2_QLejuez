@@ -148,37 +148,7 @@ int main()
 	return 0;
 }*/
 
-/*int Countc(const char* maChaine, char c)
-{
-	//int size = strlen(maChaine);
-	int size = 0;
-	while (maChaine[size] != 0)
-	{
-		size = size + 1;
-	}
-
-	int nb = 0;
-
-	for(int i = 0; i < size; i++)
-	{
-		if (maChaine[i] == c)
-		{
-			nb = nb + 1;
-		}
-	}
-	return nb;
-}
-
-int main()
-{
-	int nbA = Countc("sapin", 'a');
-
-	printf("nombre de a: %d", nbA);
-
-	return 0;
-}*/
-
-int main()
+/*int main()
 {
 	MyLinkedList linkedList = 1;
 
@@ -193,4 +163,73 @@ int main()
 
 	linkedList.PrintList();
 	return 0;
+}*/
+
+int Countc(const char* maChaine, char c)
+{
+	//int size = strlen(maChaine);
+	int size = 0;
+	while (maChaine[size] != 0)
+	{
+		size = size + 1;
+	}
+
+	int nb = 0;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (maChaine[i] == c)
+		{
+			nb = nb + 1;
+		}
+	}
+	return nb;
 }
+
+void StrCpy(char* dst, const char* src)
+{
+	while (*src)
+	{
+		*dst = *src;
+		dst++;
+		src++;
+	}
+	*dst = 0;
+}
+
+void Strncpy(char* dst, int nb, const char* src)
+{
+	int size = 0;
+	
+	while ((src[size] != 0) && (size < nb))
+	{
+		dst[size] = src[size];
+		size++;
+	}
+	dst[size] = 0;
+
+	//Version corrigée
+	/*while (*src && nb--)
+	{
+		*dst = *src;
+		dst++;
+		src++;
+	}
+	*dst = 0;*/
+
+}
+
+int main()
+{
+	int nbA = Countc("sapin", 'a');
+
+	char chaine[250] = {};
+	int lenghtnb = 2;
+
+	//StrCpy(chaine, "Salut a tous");
+	Strncpy(chaine, 4, "Salut a tous");
+	printf("copie %s", chaine);
+
+	return 0;
+}
+
