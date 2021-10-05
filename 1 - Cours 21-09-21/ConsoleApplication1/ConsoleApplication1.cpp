@@ -234,15 +234,33 @@ int main()
 	return 0;
 }*/
 
+
+
 int main()
 {
 	IntArray toto(16);
 	for (int i = 0; i < 16; i++)
 		toto.set(i, i);
 	 
-	toto.insertAt(10, 1000);
+	toto.insertAt(1,50);
+	toto.insertAt(1,100);
+	toto.insertAt(10,25);
+	toto.qsort();
 	toto.printArray();
 	return 0;
 
+}
+
+static int cmp(const void * v0, const void * v1)
+{
+	if (*(int*)v1 < *(int*)v0) return 1;
+	if (*(int*)v1 > *(int*)v0) return -1;
+	return 0;
+
+}
+
+void IntArray::qsort()
+{
+	::qsort(data, size, sizeof(int), cmp);
 }
 

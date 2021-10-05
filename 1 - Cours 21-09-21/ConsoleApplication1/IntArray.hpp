@@ -77,9 +77,11 @@ public :
 	{
 		int oldSize = size;
 
+		/*
 		//si l'index est a un index plus haut que la limite du tableau
 		while (idx > size)
 			resize(size + 1);
+			*/
 
 		//si il manque une place pour insérer un nouvel élément
 		if (data[size] != 0)
@@ -92,6 +94,18 @@ public :
 		data[idx] = value;
 
 	}
+
+	void insert(int value)
+	{
+		int idx = 0;
+		while ((idx < size) && (data[idx] < value))
+		{
+			idx++;
+		}
+		insertAt(idx, value);
+	}
+
+	void qsort();
 
 	int get(int idx) {
 		if ((idx < 0) || (idx >= size))
