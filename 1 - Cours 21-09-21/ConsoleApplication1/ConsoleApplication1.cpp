@@ -2,16 +2,17 @@
 //
 
 
-#include "pch.h"
 #include <iostream>
 #include "Toto.h"
 #include "IntArray.hpp"
-#include "LinkedList.hpp"
+#include "IntList.hpp"
+
 
 namespace Oui
 {
 
 }
+
 
 /*void main1()
 {
@@ -142,7 +143,7 @@ int main()
 	//Vec4 res = a.div(b);
 	//Vec4 res = a.add(b);
 	Vec4 res = res.incr(10);
-	
+
 
 	printf("%f %f %f %f", res.x,res.y,res.z,res.w);
 	return 0;
@@ -201,7 +202,7 @@ void StrCpy(char* dst, const char* src)
 void Strncpy(char* dst, int nb, const char* src)
 {
 	int size = 0;
-	
+
 	while ((src[size] != 0) && (size < nb))
 	{
 		dst[size] = src[size];
@@ -235,13 +236,13 @@ int main()
 }*/
 
 
-
+/*
 int main()
 {
 	IntArray toto(16);
 	for (int i = 0; i < 16; i++)
 		toto.set(i, i);
-	 
+
 	toto.insertAt(1,50);
 	toto.insertAt(1,100);
 	toto.insertAt(10,25);
@@ -266,4 +267,29 @@ void IntArray::qsort()
 {
 	::qsort(data, size, sizeof(int), cmp);
 }
+*/
 
+int main()
+{
+
+	IntList * tata = (IntList*)malloc(sizeof(IntList));
+
+	//attention a tout initialiser
+	tata->value = 70;
+	tata->next = nullptr;
+
+	// ou utiliser placement new en c++
+	//new (tata) IntList();
+
+	if (length(tata) != 1) throw "alarm?";
+	if (length(0) != 0) throw "alarm?";
+
+	appendFirst(tata, 77);
+	//if (length(tata) != 2) throw "alarm?";
+	appendLast(tata, 80);
+	//if (length(tata) != 3) throw "alarm?";
+	remove(tata, 77);
+	//if (length(tata) != 0) throw "alarm?";
+
+	return 0;
+}
