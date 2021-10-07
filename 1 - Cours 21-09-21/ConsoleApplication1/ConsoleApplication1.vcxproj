@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClInclude Include="ConsoleApplication1.h" />
     <ClInclude Include="IntArray.hpp" />
+    <ClInclude Include="IntList.hpp" />
+    <ClInclude Include="IntTree.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Toto.h" />
   </ItemGroup>

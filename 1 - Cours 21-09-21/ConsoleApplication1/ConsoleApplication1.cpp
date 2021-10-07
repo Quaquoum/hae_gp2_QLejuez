@@ -6,6 +6,8 @@
 #include "Toto.h"
 #include "IntArray.hpp"
 #include "IntList.hpp"
+#include "IntTree.hpp"
+#include "pch.h"
 
 
 namespace Oui
@@ -268,7 +270,7 @@ void IntArray::qsort()
 	::qsort(data, size, sizeof(int), cmp);
 }
 */
-
+/*
 int main()
 {
 
@@ -290,6 +292,16 @@ int main()
 	//if (length(tata) != 3) throw "alarm?";
 	remove(tata, 77);
 	//if (length(tata) != 0) throw "alarm?";
+
+	return 0;
+}*/
+
+int main()
+{
+	IntTree* toto = create(66);
+
+	if (count(0) != 0) throw "alarm?";
+	if (count(toto) != 1) throw "alarm?";
 
 	return 0;
 }
