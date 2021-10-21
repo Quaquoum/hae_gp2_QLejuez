@@ -99,26 +99,24 @@ public:
 
 	void insert(int pos, int64_t elem)
 	{
-		//Decaller de pos vers la droite
-		ensure(maxSize + 1);
-		shift_right(pos, 0);
-		//poser la valeur
-		set(pos, elem);
-
 		//a b c d
 		//0 a b c d
 		//e a b c d
+		shift_right(curSize - pos);
+		set(pos, elem);
 
 	}
 
-	void shift_right(int pos, int idx)
+	void shift_right(int pos)
 	{
-		
-
+		ensure(pos);
+		set(pos, data[pos - 1]);
+		if (pos > 0)
+			shift_right(--pos);
 
 	}
 
-	void insert_orderer(int pos, int64_t elem)
+	void insert_ordered(int pos, int64_t elem)
 	{
 
 	}
