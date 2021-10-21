@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="IntArray.hpp" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Tool.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication1.cpp" />

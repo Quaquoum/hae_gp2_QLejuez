@@ -1,0 +1,12 @@
+﻿  ConsoleApplication1.cpp
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\intarray.hpp(48): warning C4244: 'argument' : conversion de 'int64_t' en 'int', perte possible de données
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\consoleapplication1.cpp(147): warning C4475: 'printf' : le modificateur de longueur 'll' ne peut pas être utilisé avec le caractère de champ de type 'f' dans le spécificateur de format
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\consoleapplication1.cpp(159): warning C4475: 'printf' : le modificateur de longueur 'll' ne peut pas être utilisé avec le caractère de champ de type 'f' dans le spécificateur de format
+  IntArray.cpp
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\intarray.hpp(48): warning C4244: 'argument' : conversion de 'int64_t' en 'int', perte possible de données
+  Génération de code en cours
+  0 of 29 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Fin de la génération du code
+  ConsoleApplication1.vcxproj -> D:\Program files (Data)\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\3 - Cours 19-10-21\Cours1\ConsoleApplication1\Release\ConsoleApplication1.exe

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <iostream>
 #include "IntArray.hpp"
+#include "Tool.hpp"
 
 #pragma region Str
 
@@ -124,20 +125,62 @@ void StrCat(char* dst, const char* src)
 
 int main()
 {
-	Int64Array List(5);
 
-	List.ensure(10);
-	List.set(8, 10);
-	List.insert(9, 11);
-	List.set(11, 12);
-	List.push_back(20);
-	List.push_back(21);
+#pragma region SpeedTest
 	/*
-	List.push_back(20);
-	List.push_back(21);
-	List.push_back(22);
-	*/
-}
+	srand(0);
+	Int64Array ti6;
+	{
+		for (int i = 0; i < 100000; i++)
+		{
+			ti6.push_back(rand() % 11353453);
+		}
+	}
 
+	{
+		double t0 = getTimeStamp();
+		Int64Array ti7;
+
+		ti7.append_sorted(ti6.data, ti6.curSize);
+
+		double t1 = getTimeStamp();
+		printf("time elapsed append : %llf s", (t1 - t0));
+
+		//ti4.bsearch(11);
+	}
+
+	{
+		double t0 = getTimeStamp();
+		Int64Array ti8;
+
+		ti8.insertionSort(ti6.data, ti6.curSize);
+
+		double t1 = getTimeStamp();
+		printf("time elapsed tsort : %llf s", (t1 - t0));
+	}*/
+#pragma endregion
+
+	//enlever les int64_Array dans le hpp
+	int tt[] = { 500,0,12,3,10,5 };
+	int sz = sizeof(tt) / sizeof(int);
+
+	Int64Array ti3;
+	ti3.append_sorted(tt,sz);
+
+	Int64Array ti4;
+	ti4.insertionSort(tt, sz);
+
+	ti4.bsearch(11);
+	return 0;
+
+
+
+	/*
+	Int64Array ListOrdered(10);
+	for (int i = 0; i < 10; i++)
+		ListOrdered.set(i, i*2);
+	ListOrdered.insert_ordered(5);*/
+
+}
 
 #pragma endregion
