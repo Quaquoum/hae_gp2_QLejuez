@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IntArray.hpp" />
+    <ClInclude Include="List.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Tool.hpp" />
   </ItemGroup>
