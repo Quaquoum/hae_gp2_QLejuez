@@ -3,12 +3,14 @@
 #include "List.hpp"
 #include <vector>
 #include <algorithm>
+#include "Tree.hpp"
 
 typedef List<double> ListD;
 typedef List<float> ListF;
 typedef List<int> ListI;
 typedef List<std::string> ListS;
 
+/*
 int main()
 {
 	
@@ -53,11 +55,26 @@ int main()
 
 
 	/*
-	List* v1 = new List(45, v0);
+	List* v1 = new List(35, v0);
 	List* v2 = v1->push_first(34);
 	List* v3 = v2->remove(34);
 	List* v4 = v3->push_back(34);
-	*/
+	
+
+	return 0;
+}
+*/
+
+int main()
+{
+	Tree<float>* tf = new Tree<float>(66.0f);
+	tf->insert(33);
+	tf->insert(99);
+	tf->insert(16);
+	tf->remove(33);
+
+	Tree<std::string>* ts = new Tree<std::string>("sapin");
+
 
 	return 0;
 }
