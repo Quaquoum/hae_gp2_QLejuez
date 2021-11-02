@@ -1,4 +1,3 @@
 ﻿  ConsoleApplication1.cpp
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\intarray.hpp(48): warning C4244: 'argument' : conversion de 'int64_t' en 'int', perte possible de données
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\consoleapplication1.cpp(23): warning C4715: 'StrLen' : les chemins de contrôle ne retournent pas tous une valeur
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\intarray.hpp(83): warning C4715: 'Int64Array::search_position' : les chemins de contrôle ne retournent pas tous une valeur
+d:\programmes(data)\windows\bureau\cours\hae_gp2_qlejuez\3 - cours 19-10-21\cours1\consoleapplication1\consoleapplication1.cpp(23): warning C4715: 'StrLen' : les chemins de contrôle ne retournent pas tous une valeur
+  ConsoleApplication1.vcxproj -> D:\Programmes(DATA)\Windows\Bureau\Cours\hae_gp2_QLejuez\3 - Cours 19-10-21\Cours1\ConsoleApplication1\Debug\ConsoleApplication1.exe

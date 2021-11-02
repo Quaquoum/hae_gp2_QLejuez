@@ -1,158 +1,104 @@
 #pragma once
-#include <iostream>
+
+#include <ctype.h>
+#include <cstdlib>
+#include <stdint.h>
 
 class Int64Array {
 public:
-	int64_t * data;
-	int maxSize;
-	int curSize;
+	int64_t* data = nullptr;
+
+	int maxSize = 0;
+	int curSize = 0;
 
 	Int64Array(int size = 0);
 
-	void Zero(int idx, int nbElem);
+	void zero(int idx, int nbElem);
+	void ensure(int size);
+	void ensureNew(int size);
+	void set_unsafe(int pos, int64_t elem) {
+		data[pos] = elem;
+	};
 
-	int64_t& get(int pos)
-	{
-		ensure(pos + 1);
-		curSize = pos + 1;
-		return data[pos];
+	void set(int pos, int64_t elem);
+	void push_back(int64_t elem) {
+		set(curSize, elem);
 	}
+
+	int64_t& get(int pos);
 
 	int64_t& operator[](int idx) {
 		return get(idx);
+	};
+
+	void push_front(int64_t elem);
+
+protected:
+	void _shift_from_to(int end, int cur);
+public:
+
+	void shift_right(int pos);
+	void insert(int pos, int64_t elem);
+
+	//-1 if the position if an ideal position is not found
+	//otherwise the position where we could be inserted
+	int search_position(int idx, int elem) {
+		if (idx >= curSize)
+			return curSize;
+		if (data[idx] >= elem)
+			return idx;
+		return search_position(idx + 1, elem);
 	}
 
-	~Int64Array()
-	{
+	//inserer l'élement en respectant la relation d'ordre data[a-1] < data[a]
+	void insert_ordered(int64_t elem);;
+
+	void clear() {
+		curSize = 0;
+	}
+
+	void append_sorted(const int64_t* arr, int sz);
+	void load(const int64_t* arr, int sz);
+	void insertionSort(const int64_t* arr, int sz);
+
+	~Int64Array() {
 		free(data);
 		data = nullptr;
 		maxSize = 0;
 		curSize = 0;
+	};
+
+	int bsearch(int64_t nb)
+	{
+		return searchMid(nb, 0, curSize - 1);
 	}
 
-	void ensure(int size);
-	void ensureNew(int size);
-
-	void set_unsafe(int pos, int64_t elem);
-	void set(int pos, int64_t elem);
-
-	void push_back(int64_t elem);
-
-	void insert(int pos, int64_t elem);
-	void _shift_from_to(int end, int cur);
-	void shift_right(int pos);
-
-	//inserer l'element en respectant la relation d'ordre data[a-1] < data[a]
-	void insert_ordered(int64_t elem)
+	int searchMid(int64_t nb, int start, int end)
 	{
-		int pos = search_position(0, elem);
-		if (pos == -1) insert(0, elem);
-		else insert(pos, elem);
+		if (end < start)
+			return -1;
 
-		//check_shift(elem, maxSize);
+		if (data[start] == nb) return start;
+		if (data[end] == nb) return end;
 
-	}
+		int midValue = (start + end) >> 1;
 
-	void check_shift(int64_t elem, int cur)
-	{
-		//si data est plus grand ou égal > avancer
-		if (data[cur] >= elem)
+		if (nb == data[midValue])
 		{
-			check_shift(elem, cur - 1);
+			return midValue;
 		}
 
-		if (data[cur] < elem)
+		if (nb < data[midValue])
 		{
-			//si data est plus petit que elem inserer
-			insert(cur +1, elem);
-			return;
-		}
-	}
-
-	int search_position(int idx, int elem)
-	{
-		//si data est plus grand ou égal > avancer
-		if (idx >= curSize)
-			return curSize;
-
-		if (data[idx] >= elem)
-			return idx;
-	
-		if (data[idx] < elem)
-			search_position(idx + 1, elem);
-	}
-
-
-	void append_sorted(const int64_t* arr, int sz)
-	{
-		if (sz <= 0) return;
-
-		insert_ordered(arr[0]);
-		append_sorted(arr + 1, sz - 1);
-
-	}
-
-	void clear()
-	{
-		curSize = 0;
-	}
-
-	void load(const int64_t* arr, int sz)
-	{
-		if (sz == 0) return;
-
-		set(curSize, arr[0]);
-		load(arr + 1, sz - 1);
-	}
-
-	void insertionSort(const int64_t* arr, int sz)
-	{
-		clear();
-		load(arr, sz);
-
-		//en iteratif
-		int j;
-		for (int i = 1; i < sz; i++)
-		{
-			j = i;
-			while (j > 0 && data[j] < data[j - 1])
-			{
-				int64_t temp = data[j];
-				data[j] = data[j - 1];
-				data[j - 1] = temp;
-				j--;
-			}
+			return searchMid(nb, start + 1, midValue - 1);
 		}
 
-		//for i 1 n
-		//j = i
-		//while j > 0 && arr[j] < arr[j-1]
-		//swap (j,j-1)
-	}
-
-	void bsearch(int nb)
-	{
-		int pos = searchMid(nb, 0, maxSize);
-		insert(pos, nb);
-	}
-
-	int searchMid(int nb, int start, int end)
-	{
-		if (start == end - 1)
+		if (nb > data[midValue])
 		{
-			return end;
+			return searchMid(nb, midValue + 1, end - 1);
 		}
 
-		int midValue = (start + end) / 2;
-
-		if (data[midValue] < nb)
-		{
-			searchMid(nb, start, midValue - 1);
-		}
-		if (data[midValue] > nb)
-		{
-			searchMid(nb, midValue + 1, end);
-		}
-
+		return 0;
 	}
+
 };

@@ -161,25 +161,24 @@ int main()
 #pragma endregion
 
 	//enlever les int64_Array dans le hpp
-	int tt[] = { 500,0,12,3,10,5 };
+	int64_t tt[] = { 500,0,12,3,10,5 };
 	int sz = sizeof(tt) / sizeof(int);
 
-	Int64Array ti3;
-	ti3.append_sorted(tt,sz);
+	//Int64Array ti3;
+	//ti3.append_sorted(tt,sz);
 
-	Int64Array ti4;
-	ti4.insertionSort(tt, sz);
+	//Int64Array ti4;
+	//ti4.insertionSort(tt, sz);
 
-	ti4.bsearch(11);
-	return 0;
+	//ti4.bsearch(11);
 
-
-
-	/*
-	Int64Array ListOrdered(10);
-	for (int i = 0; i < 10; i++)
+	Int64Array ListOrdered(1000);
+	for (int i = 0; i < 10000; i++)
 		ListOrdered.set(i, i*2);
-	ListOrdered.insert_ordered(5);*/
+
+	int res = ListOrdered.bsearch(8);
+
+	return 0;
 
 }
 
