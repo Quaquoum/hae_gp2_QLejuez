@@ -123,7 +123,7 @@ void StrCat(char* dst, const char* src)
 
 #pragma region Int Array
 
-int main()
+int mainAlgo()
 {
 
 #pragma region SpeedTest
@@ -183,3 +183,8 @@ int main()
 }
 
 #pragma endregion
+
+int mainList()
+{
+	
+}
