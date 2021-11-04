@@ -14,13 +14,17 @@ int main()
 	//Shape
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "The Witcher 3");
 	window.setVerticalSyncEnabled(true);
-	sf::RectangleShape shape(sf::Vector2f(100, 50));
+	sf::RectangleShape shape(sf::Vector2f(50, 100));
 	shape.setFillColor(sf::Color::Red);
 	shape.setOutlineThickness(4);
 	shape.setOutlineColor(sf::Color::White);
 	sf::Vector2f shapePosition = shape.getPosition();
 	shape.setOrigin(580,280);
 	shape.setPosition(580, 280);
+
+	//Gun
+	sf::RectangleShape gun(sf::Vector2f(70, 20));
+	gun.setFillColor(sf::Color::Cyan);
 
 	//origin
 	sf::CircleShape originShape(5.f);
@@ -31,6 +35,11 @@ int main()
 	//Mouse
 	sf::CircleShape mouseShape(5.f);
 	mouseShape.setFillColor(sf::Color::White);
+
+	//Projectile
+	sf::CircleShape bullet(5.f);
+	bullet.setFillColor(sf::Color::Magenta);
+	sf::Vector2f bulletPos;
 
 	//Text
 	sf::Text text("hello", font);
@@ -83,14 +92,28 @@ int main()
 
 			//rotate
 			float angle = atan2(-offset.y, -offset.x) * (360 / (3.14 * 2));
-			shape.setRotation(angle);
+			gun.setRotation(angle);
+			gun.setPosition(shape.getPosition() + sf::Vector2f(0, 16));
 
+			//mouse gun
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				bullet.setPosition(gun.getPosition());
+
+			}
+			if (bullet.getPosition().x != 0 && bullet.getPosition().y != 0)
+			{
+				
+				bullet.setPosition(bulletPos);
+				window.draw(bullet);
+			}
 		}
 
 		window.clear();
 		window.draw(shape);
 		window.draw(text);
 		window.draw(mouseShape);
+		window.draw(gun);
 		window.display();
 	}
 

@@ -1,8 +1,8 @@
 ﻿  ConsoleApplication1.cpp
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\4 - cours 04-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(50): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\4 - cours 04-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(59): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
           with
           [
               T=int
           ]
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\4 - cours 04-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(85): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\4 - cours 04-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(94): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
   ConsoleApplication1.vcxproj -> D:\Program files (Data)\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\4 - Cours 04-11-2021 - Copie\ConsoleApplication1\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
