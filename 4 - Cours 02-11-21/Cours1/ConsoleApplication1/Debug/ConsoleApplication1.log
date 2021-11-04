@@ -1,3 +1,0 @@
-﻿  ConsoleApplication1.cpp
-MSVCRTD.lib(exe_main.obj) : error LNK2019: symbole externe non résolu _main référencé dans la fonction "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-D:\Programmes(DATA)\Windows\Bureau\Cours\hae_gp2_QLejuez\4 - Cours 02-11-21\Cours1\ConsoleApplication1\Debug\ConsoleApplication1.exe : fatal error LNK1120: 1 externes non résolus
