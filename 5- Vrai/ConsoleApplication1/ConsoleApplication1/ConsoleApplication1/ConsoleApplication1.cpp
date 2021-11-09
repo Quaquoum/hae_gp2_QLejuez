@@ -6,10 +6,14 @@
 #include "Tool.hpp"
 #include "Utility.hpp"
 //#include "Bullet.hpp"
+#include "Entity.hpp"
 
+EntityManager repo;
+
+#pragma region Functions
 void drawParticles(sf::RenderWindow& window, sf::CircleShape particles[])
 {
-	
+
 
 	window.draw(particles[1]);
 }
@@ -20,9 +24,9 @@ void drawMountain(sf::RenderWindow& window)
 	arr.setPrimitiveType(sf::LinesStrip);
 	sf::Color col = sf::Color::Green;
 
-	sf::Vector2f a(0,500);
-	sf::Vector2f b(300,300);
-	sf::Vector2f c(900,400);
+	sf::Vector2f a(0, 500);
+	sf::Vector2f b(300, 300);
+	sf::Vector2f c(900, 400);
 	sf::Vector2f d(window.getSize().x, 500);
 
 	for (int i = 0; i < 256; i++)
@@ -40,7 +44,7 @@ void drawMountain(sf::RenderWindow& window)
 		//float x = (window.getSize().x - 0) * i / 255;
 		float x = catmull(a.x, b.x, c.x, d.x, t);
 		float y = catmull(a.y, b.y, c.y, d.y, t);
-		arr.append(sf::Vertex(sf::Vector2f(x,y), col));
+		arr.append(sf::Vertex(sf::Vector2f(x, y), col));
 	}
 
 	for (int i = 0; i < 256; i++)
@@ -76,6 +80,11 @@ void drawGround(sf::RenderWindow& window)
 
 	window.draw(arr);
 }
+
+
+
+
+#pragma endregion
 
 int main()
 {
@@ -113,7 +122,10 @@ int main()
 	//Bullet
 	sf::CircleShape bullet(10.f);
 	bullet.setFillColor(sf::Color(0,0,0,0));
+	bullet.setOutlineThickness(2);
+
 	sf::Vector2f bulletPos;
+	int reversed = 1;
 
 	//Text
 	sf::Text text("hello", font);
@@ -121,29 +133,7 @@ int main()
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::Yellow);
 
-	//particles
-	sf::CircleShape particles[]
-	{
-		sf::CircleShape(1),
-		sf::CircleShape(1),
-		sf::CircleShape(1),
-		sf::CircleShape(1)
-	};
 
-	sf::CircleShape particle(5.f);
-	particle.setFillColor(sf::Color::White);
-
-	int fade = 0;
-	int randline;
-
-
-	//floor
-	/*
-	sf::VertexArray floor(sf::LinesStrip, 2);
-	floor[0].position = sf::Vector2f(0, 710);
-	floor[1].position = sf::Vector2f(1280, 710);
-	*/
-	
 
 
 	double tStart = getTimeStamp();
@@ -180,10 +170,10 @@ int main()
 		}
 		
 		
-		if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
+		/*if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
 		{
-			bullet.setFillColor(sf::Color(0, 0, 0, 0));
-		}
+			
+		}*/
 
 		if (bullet.getFillColor() == sf::Color::Magenta)
 		{
@@ -191,7 +181,16 @@ int main()
 			float projRad = 3.14 / 180 * bullet.getRotation();
             float x = 10.0f * cos(projRad);
             float y = 10.0f * sin(projRad);
-            bullet.move(x, y);
+
+			if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
+			{
+				reversed *= -1;
+
+				//Get position de l'intersection
+
+			}
+
+			bullet.move(x * reversed, y * reversed);
 
 		}
 		
@@ -220,6 +219,7 @@ int main()
 				bullet.setPosition(gun.getPosition());
 				bullet.setRotation(gun.getRotation());
 				bullet.setFillColor(sf::Color::Magenta); //change to white once it's good
+				bullet.setOutlineColor(sf::Color::Red);
 
 			}
 		}
