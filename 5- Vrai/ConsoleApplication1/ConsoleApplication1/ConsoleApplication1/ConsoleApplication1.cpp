@@ -7,6 +7,7 @@
 #include "Utility.hpp"
 //#include "Bullet.hpp"
 #include "Entity.hpp"
+#include <SFML/Audio.hpp>
 
 EntityManager repo;
 
@@ -88,6 +89,12 @@ void drawGround(sf::RenderWindow& window)
 
 int main()
 {
+	//Sound
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("WallBounce.wav"))
+		return -1;
+	sf::Sound sound;
+	sound.setBuffer(buffer);
 
 	//Load Font
 	sf::Font font;
@@ -184,12 +191,13 @@ int main()
 			if (bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
 			{
 				reversedy *= -1.1;
-
+				sound.play();
 				//Get position de l'intersection
 			}
 			if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x)
 			{
 				reversedx *= -1.9;
+				sound.play();
 			}
 			bullet.move(x * reversedx, y * reversedy);
 		}

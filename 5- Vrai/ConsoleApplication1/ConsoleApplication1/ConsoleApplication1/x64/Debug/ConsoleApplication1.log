@@ -1,5 +1,5 @@
 ﻿  ConsoleApplication1.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(30): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(31): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
@@ -8,7 +8,7 @@ c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleappl
           [
               T=float
           ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(76): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(77): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
@@ -17,13 +17,13 @@ c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleappl
           [
               T=float
           ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(147): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(154): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
           with
           [
               T=int
           ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(180): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(186): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(192): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(202): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(187): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(193): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(199): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- vrai\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(210): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
   ConsoleApplication1.vcxproj -> C:\Users\Quaqu\Desktop\Cash Defender\Pinball\hae_gp2_QLejuez\5- Vrai\ConsoleApplication1\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
