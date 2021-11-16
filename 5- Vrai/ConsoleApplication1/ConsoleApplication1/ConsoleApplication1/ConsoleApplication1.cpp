@@ -8,6 +8,7 @@
 //#include "Bullet.hpp"
 #include "Entity.hpp"
 #include <SFML/Audio.hpp>
+#include "Block.hpp"
 
 EntityManager repo;
 
@@ -82,13 +83,26 @@ void drawGround(sf::RenderWindow& window)
 	window.draw(arr);
 }
 
-
+void createBlocks(Block block)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		float posY = 30 * i;
+		for (int j = 0; j < 2; j++)
+		{
+			float posX = 30 * j;
+			block.create(posX,posY);
+		}
+	}
+}
 
 
 #pragma endregion
 
 int main()
 {
+	Block block;
+
 	//Sound
 	sf::SoundBuffer buffer;
 	if (!buffer.loadFromFile("WallBounce.wav"))
@@ -174,6 +188,10 @@ int main()
 		{
 			shape.move(0, 5);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			createBlocks(block);
+		}
 		
 		
 		/*if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
@@ -239,6 +257,7 @@ int main()
 		window.draw(bullet);
 		window.draw(gun);
 
+		block.draw(window);
 		drawGround(window);
 		drawMountain(window);
 

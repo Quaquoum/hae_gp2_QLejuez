@@ -160,11 +160,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.hpp" />
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Utility.hpp" />

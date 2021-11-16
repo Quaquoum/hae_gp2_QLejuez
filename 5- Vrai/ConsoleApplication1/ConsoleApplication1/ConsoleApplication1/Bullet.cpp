@@ -1,38 +1,17 @@
 #include "Bullet.hpp"
 /*
-Bullet::Bullet()
-{
+Bullet::Bullet() {
 	int t = 10;
-	b = sf::CircleShape(5);
-	b.setOutlineThickness(4);
-	b.setFillColor(sf::Color::Magenta);
+	b = sf::CircleShape(t);
+	b.setOutlineThickness(2);
+	b.setFillColor(sf::Color::Yellow);
 	b.setOutlineColor(sf::Color::Red);
-	b.setOrigin(sf::Vector2f(40, 40));
+	b.setOrigin(sf::Vector2f(t, t));
 }
 
-
-void Bullet::update(double dt)
-{
-	for (int i = 0; i < px.size(); ++i)
-	{
-		if (alive[i])
-		{
-			px[i] += dx[i] * dt;
-			py[i] += dy[i] * dt;
-			if ((px[i] > 3000) || (px[i] < -100) || py[i] > 3000 || py[i] < -100)
-			{
-				alive[i] = false;
-			}
-		}
-	}
-}
-
-inline void Bullet::create(float _px, float _py, float _dx, float _dy)
-{
-	for (int i = 0; i < px.size(); i++)
-	{
-		if (!alive[i])
-		{
+void Bullet::create(float _px, float _py, float _dx, float _dy) {
+	for (int i = 0; i < px.size(); ++i) {
+		if (!alive[i]) {
 			px[i] = _px;
 			py[i] = _py;
 			dx[i] = _dx;
@@ -48,8 +27,29 @@ inline void Bullet::create(float _px, float _py, float _dx, float _dy)
 	alive.push_back(true);
 }
 
-inline void Bullet::draw(sf::RenderWindow & win)
-{
-	int idx = 0
+void Bullet::update(double dt) {
+	for (int i = 0; i < px.size(); ++i) {
+		if (alive[i]) {
+			px[i] += dx[i] * dt;
+			py[i] += dy[i] * dt;
+			if (
+				(px[i] > 3000) || (px[i] < -100) ||
+				(py[i] > 3000) || (py[i] < -100)
+				) {
+				alive[i] = false;
+			}
+		}
+	}
+}
+void Bullet::draw(sf::RenderWindow& win) {
+	int idx = 0;
+	const int sz = px.size();
+	while (idx < sz) {
+		if (alive[idx]) {
+			b.setPosition(px[idx], py[idx]);
+			win.draw(b);
+		}
+		idx++;
+	}
 }
 */
