@@ -125,15 +125,14 @@ int main()
 	bullet.setOutlineThickness(2);
 
 	sf::Vector2f bulletPos;
-	int reversed = 1;
+	int reversedx = 1;
+	int reversedy = 1;
 
 	//Text
 	sf::Text text("hello", font);
 	text.setCharacterSize(30);
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::Yellow);
-
-
 
 
 	double tStart = getTimeStamp();
@@ -182,16 +181,17 @@ int main()
             float x = 10.0f * cos(projRad);
             float y = 10.0f * sin(projRad);
 
-			if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
+			if (bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
 			{
-				reversed *= -1;
+				reversedy *= -1.1;
 
 				//Get position de l'intersection
-
 			}
-
-			bullet.move(x * reversed, y * reversed);
-
+			if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x)
+			{
+				reversedx *= -1.9;
+			}
+			bullet.move(x * reversedx, y * reversedy);
 		}
 		
 
