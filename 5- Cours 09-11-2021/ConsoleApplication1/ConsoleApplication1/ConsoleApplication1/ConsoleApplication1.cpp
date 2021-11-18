@@ -144,17 +144,19 @@ int main()
 	sf::CircleShape bullet(10.f);
 	bullet.setFillColor(sf::Color(0,0,0,0));
 	bullet.setOutlineThickness(2);
+	sf::FloatRect bulletHitbox = bullet.getGlobalBounds();
 
 	sf::Vector2f bulletPos;
 	int reversedx = 1;
 	int reversedy = 1;
 
 	//Text
-	sf::Text text("hello", font);
+	sf::Text text("0", font);
 	text.setCharacterSize(30);
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::Yellow);
-
+	int score = 0;
+	sf::String scoretext;
 
 	double tStart = getTimeStamp();
 	double tEnterFrame = getTimeStamp();
@@ -165,7 +167,6 @@ int main()
 	while (window.isOpen())
 	{
 		//create blocks
-		
 		if (hasBeenCalled == false)
 		{
 			for (int i = 0; i < 3; i++)
@@ -180,6 +181,10 @@ int main()
 			}
 			hasBeenCalled = true;
 		}
+
+		//Check collisions
+		bulletHitbox = bullet.getGlobalBounds();
+		
 
 		//get mouse position
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -277,7 +282,19 @@ int main()
 		
 		for (int i = 0; i < 42; i++)
 		{
+			if (block[i]->alive == true)
+			{
 				block[i]->draw(window);
+			}
+				if (block[i]->alive == true && block[i]->collided(bulletHitbox))
+				{
+					block[i]->killed();
+					score += 100;
+					char numstr[10];
+					sprintf_s(numstr, "%i", score);
+					scoretext = (numstr);
+					text.setString(scoretext);
+				}
 		}
 		
 		

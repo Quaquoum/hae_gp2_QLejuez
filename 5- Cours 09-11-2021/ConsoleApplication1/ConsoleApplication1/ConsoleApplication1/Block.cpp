@@ -15,14 +15,25 @@ void Block::create(float posX_, float posY_)
 {
 }
 
-void Block::update(double dt) 
+bool Block::collided(sf::FloatRect bulletHitbox)
 {
+	if (this == nullptr)
+		return false;
 
+	sf::FloatRect bHitbox = b.getGlobalBounds();
+	if (bHitbox.intersects(bulletHitbox))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Block::killed() 
 {
-
+	alive = false;
 }
 
 void Block::draw(sf::RenderWindow& win) 
@@ -30,5 +41,8 @@ void Block::draw(sf::RenderWindow& win)
 	if (this == nullptr)
 		return;
 
+	if (alive = true)
+	{
 		win.draw(b);
+	}
 }
