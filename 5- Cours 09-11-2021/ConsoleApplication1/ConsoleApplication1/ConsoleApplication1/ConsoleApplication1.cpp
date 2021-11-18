@@ -184,6 +184,25 @@ int main()
 
 		//Check collisions
 		bulletHitbox = bullet.getGlobalBounds();
+
+		bool touched = false;
+		for (int i = 0; i < 42; i++)
+		{
+			if (block[i]->alive == true && block[i]->collided(bulletHitbox))
+			{
+				block[i]->killed();
+				score += 100;
+				char numstr[10];
+				sprintf_s(numstr, "%i", score);
+				scoretext = (numstr);
+				text.setString(scoretext);
+				touched = true;
+			}
+		}
+		if (touched)
+		{
+			reversedy *= -1.1;
+		}
 		
 
 		//get mouse position
@@ -286,15 +305,6 @@ int main()
 			{
 				block[i]->draw(window);
 			}
-				if (block[i]->alive == true && block[i]->collided(bulletHitbox))
-				{
-					block[i]->killed();
-					score += 100;
-					char numstr[10];
-					sprintf_s(numstr, "%i", score);
-					scoretext = (numstr);
-					text.setString(scoretext);
-				}
 		}
 		
 		
