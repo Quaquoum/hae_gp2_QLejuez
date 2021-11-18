@@ -87,10 +87,10 @@ void createBlocks(Block block)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		float posY = 30 * i;
-		for (int j = 0; j < 2; j++)
+		float posY = 30 * i + 10;
+		for (int j = 0; j < 16; j++)
 		{
-			float posX = 30 * j;
+			float posX = 30 * j + 10;
 			block.create(posX,posY);
 		}
 	}
@@ -101,7 +101,7 @@ void createBlocks(Block block)
 
 int main()
 {
-	Block block;
+	Block* block[30];
 
 	//Sound
 	sf::SoundBuffer buffer;
@@ -160,8 +160,26 @@ int main()
 	double tEnterFrame = getTimeStamp();
 	double tExitFrame = getTimeStamp();
 
+	bool hasBeenCalled = false;
+
 	while (window.isOpen())
 	{
+		//create blocks
+		
+		if (hasBeenCalled == false)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				float posY = 100 * i + 60;
+				for (int j = 0; j < 14; j++)
+				{
+					float posX = 90 * j + 60;
+					Block* b = new Block(posX, posY);
+					block[j + i*14] = b;
+				}
+			}
+			hasBeenCalled = true;
+		}
 
 		//get mouse position
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -190,7 +208,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-			createBlocks(block);
+
 		}
 		
 		
@@ -256,8 +274,15 @@ int main()
 		window.draw(mouseShape);
 		window.draw(bullet);
 		window.draw(gun);
+		
+		for (int i = 0; i < 42; i++)
+		{
+				block[i]->draw(window);
+		}
+		
+		
+		
 
-		block.draw(window);
 		drawGround(window);
 		drawMountain(window);
 

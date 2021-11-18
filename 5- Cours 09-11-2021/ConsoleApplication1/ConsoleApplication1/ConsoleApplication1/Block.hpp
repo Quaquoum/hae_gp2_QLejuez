@@ -7,15 +7,13 @@ class Block {
 public:
 	sf::RectangleShape b;
 
-	std::vector<float>	posX;
-	std::vector<float>	posY;
+	bool alive = true;
 
-	std::vector<bool>	alive;
-
-	Block();
+	Block(float posX, float posY);
 
 	void create(float posX, float posY);
 	void update(double dt);
+	void killed();
 
 	void draw(sf::RenderWindow& win);
 };
