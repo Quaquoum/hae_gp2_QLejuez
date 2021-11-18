@@ -163,6 +163,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="turtle.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Pad.hpp" />
+    <ClInclude Include="turtle.hpp" />
     <ClInclude Include="Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

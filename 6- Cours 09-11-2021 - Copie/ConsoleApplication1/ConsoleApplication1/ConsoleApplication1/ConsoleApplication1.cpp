@@ -29,7 +29,9 @@ int main()
 	//Block Array
 	Block* block[30];
 
-	Turtle* turtle;
+	sf::RenderTexture turtleSprite;
+	Turtle* turtle = new Turtle(1280 / 2, 720 / 2);
+	//Turtle turtle(1280 / 2, 720 / 2);
 
 	//Load Font
 	sf::Font font;
@@ -51,13 +53,23 @@ int main()
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseShape.setPosition(mousePos.x, mousePos.y);
 
+		//rotate
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			
+			turtle->rotate(2);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			
+			turtle->rotate(-2);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			turtle->move(2);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			turtle->move(-2);
 		}
 	
 		sf::Event event;
@@ -70,7 +82,10 @@ int main()
 
 		window.clear();
 		window.draw(mouseShape);
-		window.draw(turtle);
+
+
+
+		turtle->draw(window);
 
 		window.display();
 
