@@ -15,6 +15,7 @@ public:
 	void create(float posX, float posY);
 	bool collided(sf::FloatRect bulletHitbox);
 	void killed();
+	void createParticles();
 
 	void draw(sf::RenderWindow& win);
 };
