@@ -12,9 +12,12 @@ enum CmdType
 struct Cmd
 {
 	CmdType type = Advance;
+	//Original value = direction
 	float originalValue = 0.0f;
+	//currentvalue = time passed on an action
 	float currentValue = 0.0f;
 	Cmd* next = nullptr;
+	Cmd* head = nullptr;
 
 };
 
@@ -46,6 +49,6 @@ public:
 	void appendCmds(Cmd* cmds);
 
 protected:
-	Cmd* applyCmd(Cmd* cmd);
+	Cmd* applyCmd(Cmd* cmd, float dt);
 	Cmd* cmds = nullptr;
 };

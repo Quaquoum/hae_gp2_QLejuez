@@ -49,6 +49,9 @@ int main()
 
 	while (window.isOpen())
 	{
+		double dt = tExitFrame - tEnterFrame;
+		tEnterFrame = getTimeStamp();
+
 		//get mouse position
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseShape.setPosition(mousePos.x, mousePos.y);

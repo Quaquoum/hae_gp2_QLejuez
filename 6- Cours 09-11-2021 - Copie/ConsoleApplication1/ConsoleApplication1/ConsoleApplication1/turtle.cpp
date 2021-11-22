@@ -75,10 +75,35 @@ void Turtle::appendCmds(Cmd * cmds)
 	//ajouter a la fin de cmd
 }
 
-Cmd * Turtle::applyCmd(Cmd * cmd)
+Cmd * Turtle::applyCmd(Cmd * cmd, float dt)
 {
+	if (cmd == nullptr)
+		return nullptr;
 	//diminuer de current value
+
+	if (cmd->originalValue > 0)
+	{
+		cmd->currentValue -= dt;
+		if (cmd->currentValue <= 0)
+			return applyCmd(cmd->next, dt);
+	}
+	else
+	{
+		cmd->currentValue += dt;
+		if (cmd->currentValue <= 0)
+			return applyCmd(cmd->next, dt);
+	}
+
+	if (cmd->type == Advance)
+	{
+		move(sf::Vector2f(cmd->originalValue, 0));
+	}
+	if (cmd->type == Turn)
+	{
+		rotate(cmd->originalValue);
+	}
+
 	//si fini renvoyer next et se supprimer
 
-	return nullptr;
+	return applyCmd(cmd, dt);
 }
