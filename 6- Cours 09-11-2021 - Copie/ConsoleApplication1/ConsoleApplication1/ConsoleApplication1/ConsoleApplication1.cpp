@@ -30,8 +30,8 @@ int main()
 	Block* block[30];
 
 	sf::RenderTexture turtleSprite;
-	Turtle* turtle = new Turtle(1280 / 2, 720 / 2);
-	//Turtle turtle(1280 / 2, 720 / 2);
+	Turtle turtle = Turtle(500, 600);
+	Turtle* GV_turtle = &turtle;
 
 	//Load Font
 	sf::Font font;
@@ -57,19 +57,19 @@ int main()
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			turtle->rotate(2);
+			GV_turtle->rotate(2);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			turtle->rotate(-2);
+			GV_turtle->rotate(-2);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			turtle->move(2);
+			GV_turtle->move(sf::Vector2f(5, 0));
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			turtle->move(-2);
+			GV_turtle->move(sf::Vector2f(-5, 0));
 		}
 	
 		sf::Event event;
@@ -85,7 +85,7 @@ int main()
 
 
 
-		turtle->draw(window);
+		GV_turtle->draw(window);
 
 		window.display();
 

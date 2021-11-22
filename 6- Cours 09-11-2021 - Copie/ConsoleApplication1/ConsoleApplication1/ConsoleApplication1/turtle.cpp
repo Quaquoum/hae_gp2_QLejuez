@@ -1,6 +1,9 @@
 #include "turtle.hpp"
+#include "Tool.hpp"
 
 Turtle::Turtle(float posX, float posY) {
+
+	trs = Transform();
 
 	//auto& head
 	head = sf::CircleShape(6.f);
@@ -10,11 +13,15 @@ Turtle::Turtle(float posX, float posY) {
 	body.setFillColor(sf::Color::Green);
 
 	body.setOrigin(body.getRadius(), body.getRadius());
-	head.setOrigin(body.getOrigin());
+	head.setOrigin(body.getRadius() - 20, body.getRadius() - 5);
+
+	headOffset = sf::Vector2f(body.getRadius() + 10, body.getRadius() / 2);
 
 	/*
 	body.setPosition(posX,posY);
 	head.setPosition(posX + 20,posY + 4);*/
+	
+	this->trs.translate(posX,posY);
 }
 
 void Turtle::drawOn(sf::RenderWindow & win)
@@ -35,16 +42,12 @@ void Turtle::update(double dt)
 
 void Turtle::rotate(float rotat)
 {
-	trs.rotate(rotat);
+	this->trs.rotate(rotat);
 }
 
-void Turtle::move(float speed)
+void Turtle::move(sf::Vector2f direction)
 {
-	head.move(speed, 0);
-	body.move(speed, 0);
-
-	Cmd advance;
-	advance.currentValue += speed;
+	trs.translate(direction);
 }
 
 void Turtle::draw(sf::RenderWindow & win)

@@ -1,7 +1,13 @@
+
 #include <chrono>
 #include <ctime>
 using namespace std;
 using namespace std::chrono;
+
+inline double pi() {
+	return 3.14159265359;
+}
+
 inline double getTimeStamp() //retourne le temps actuel en seconde
 {
 	std::chrono::nanoseconds ns =

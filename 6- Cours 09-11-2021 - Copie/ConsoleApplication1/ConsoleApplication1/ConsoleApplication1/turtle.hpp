@@ -18,17 +18,18 @@ struct Cmd
 
 };
 
-class Turtle : public sf::Transformable
+class Turtle : public sf::Transform
 {
 public:
+	Turtle(float posX, float posY);
+
 	sf::CircleShape head;
 	sf::CircleShape body;
 	sf::Transform trs;
 	sf::CircleShape* comps[3];
 
-	Turtle(float posX, float posY);
-
 	bool alive = true;
+	sf::Vector2f headOffset;
 	
 	void drawOn(sf::RenderWindow& win);
 	void drawOff(sf::RenderWindow& win);
@@ -36,7 +37,7 @@ public:
 
 	void update(double dt);
 	void rotate(float rot);
-	void move(float speed);
+	void move(sf::Vector2f direction);
 	void draw(sf::RenderWindow& win);
 
 	void setCmds(Cmd* cmds);
