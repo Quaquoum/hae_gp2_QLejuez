@@ -77,4 +77,5 @@ CommandList::Command* CommandList::CreateCommand(CommandType _type, float value)
 
 void CommandList::PrintList()
 {
+
 }

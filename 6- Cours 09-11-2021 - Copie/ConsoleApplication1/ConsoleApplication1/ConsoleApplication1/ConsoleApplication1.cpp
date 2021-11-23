@@ -10,6 +10,7 @@
 #include <SFML/Audio.hpp>
 #include "Block.hpp"
 #include "turtle.hpp"
+#include "CommandList.hpp"
 
 EntityManager repo;
 
@@ -44,6 +45,15 @@ int main()
 	double tStart = getTimeStamp();
 	double tEnterFrame = getTimeStamp();
 	double tExitFrame = getTimeStamp();
+	CommandList* cmd1 = new CommandList(CommandList::CommandType::Advance, 1);
+
+	for (int i = 1; i < 10; i++)
+	{
+		Cmd* adv = GV_turtle->createCmd(1, 10, Advance);
+		
+		GV_turtle->appendCmds(adv);
+	}
+	GV_turtle->printCommandList();
 
 #pragma endregion
 

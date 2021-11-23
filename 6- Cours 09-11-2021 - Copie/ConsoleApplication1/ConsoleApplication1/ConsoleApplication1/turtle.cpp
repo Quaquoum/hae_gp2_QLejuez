@@ -64,15 +64,27 @@ void Turtle::draw(sf::RenderWindow & win)
 
 void Turtle::appendCmds(Cmd * cmds)
 {
-	if (cmds->next != nullptr)
+	int i = 0;
+	while (cmdList[i] != nullptr && i < 100)
 	{
-		cmds->next = cmds;
+		i++;
 	}
-	else
+	if (i < 100)
 	{
-		appendCmds(cmds->next);
+		cmdList[i] = cmds;
 	}
 	//ajouter a la fin de cmd
+}
+
+void Turtle::printCommandList()
+{
+	int i = 0;
+	while (cmdList[i] != nullptr && i < 100)
+	{
+		printf("%i : %i \n", i, cmdList[i]->currentValue);
+
+		i++;
+	}
 }
 
 Cmd * Turtle::applyCmd(Cmd * cmd, float dt)
@@ -106,4 +118,14 @@ Cmd * Turtle::applyCmd(Cmd * cmd, float dt)
 	//si fini renvoyer next et se supprimer
 
 	return applyCmd(cmd, dt);
+}
+
+Cmd* Turtle::createCmd(float oValue, float curValue, CmdType ctype)
+{
+	Cmd* cmds = new Cmd;
+	cmds->originalValue = oValue;
+	cmds->currentValue = curValue;
+	cmds->type = ctype;
+
+	return cmds;
 }

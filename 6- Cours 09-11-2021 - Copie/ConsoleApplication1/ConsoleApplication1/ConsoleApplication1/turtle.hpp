@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CommandList.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 
@@ -19,12 +20,17 @@ struct Cmd
 	Cmd* next = nullptr;
 	Cmd* head = nullptr;
 
+public:
+	
+
 };
 
 class Turtle : public sf::Transform
 {
 public:
 	Turtle(float posX, float posY);
+
+	Cmd* cmdList[100];
 
 	sf::CircleShape head;
 	sf::CircleShape body;
@@ -45,8 +51,10 @@ public:
 
 	void setCmds(Cmd* cmds);
 
+	Cmd* createCmd(float oValue, float curValue, CmdType ctype);
 	//ajoute les cmds a la fin de la liste courante
 	void appendCmds(Cmd* cmds);
+	void printCommandList();
 
 protected:
 	Cmd* applyCmd(Cmd* cmd, float dt);
