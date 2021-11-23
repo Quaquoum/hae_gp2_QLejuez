@@ -26,28 +26,30 @@ Turtle::Turtle(float posX, float posY) {
 	turtleTexture = new sf::RenderTexture();
 	turtleTexture->create(2048, 2048);
 
-	drawTexture = new sf::RenderTexture();
-	drawTexture->create(2048, 2048);
-
 	this->trs.translate(posX,posY);
-}
-
-void Turtle::changeColor()
-{
 }
 
 void Turtle::update(double dt)
 {
 }
 
-void Turtle::rotate(float rotat)
+void Turtle::rotate(float rotat, double dt)
 {
 	this->trs.rotate(rotat);
 }
 
-void Turtle::move(sf::Vector2f direction)
+void Turtle::rotateCmd(float rot, double dt)
 {
-	trs.translate(direction);
+
+}
+
+void Turtle::move(float distance, double dt, float speed)
+{
+	trs.translate(distance,0);
+}
+
+void Turtle::moveCmd(float distance, double dt, float speed)
+{
 }
 
 void Turtle::draw(sf::RenderWindow & win)

@@ -12,6 +12,7 @@ enum CmdType
 	Turn,
 	PenUp,
 	PenDown,
+	PenColor,
 };
 
 struct Cmd
@@ -21,6 +22,7 @@ struct Cmd
 	float originalValue = 0.0f;
 	//currentvalue = time passed on an action
 	float currentValue = 0.0f;
+
 	Cmd* next = nullptr;
 	Cmd* head = nullptr;
 
@@ -47,6 +49,9 @@ public:
 	Turtle(float posX, float posY);
 
 	Cmd* cmdList[100];
+	float timer = 2.0f;
+	float maxDuration = 5.0f;
+
 
 	sf::CircleShape head;
 	sf::CircleShape body;
@@ -56,6 +61,7 @@ public:
 	sf::CircleShape* comps[3];
 
 	bool alive = true;
+	float speed = 1.0f;
 	sf::Vector2f headOffset;
 
 	sf::RenderTexture* turtleTexture = nullptr;
@@ -72,8 +78,11 @@ public:
 	void changeColor();
 
 	void update(double dt);
-	void rotate(float rot);
-	void move(sf::Vector2f direction);
+	void rotate(float rot, double dt);
+	void rotateCmd(float rot, double dt);
+	void move(float distance, double dt);
+	void moveCmd(float distance, double dt);
+
 	void draw(sf::RenderWindow& win);
 	void changeColor(sf::Color color);
 	

@@ -27,9 +27,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Turtle Adventure");
 	window.setVerticalSyncEnabled(true);
 
-	//Block Array
-	Block* block[30];
-
 	sf::RenderTexture turtleSprite;
 	Turtle turtle = Turtle(500, 600);
 	Turtle* GV_turtle = &turtle;
@@ -52,13 +49,7 @@ int main()
 	double tExitFrame = getTimeStamp();
 	CommandList* cmd1 = new CommandList(CommandList::CommandType::Advance, 1);
 
-	/*for (int i = 1; i < 10; i++)
-	{
-		Cmd* adv = GV_turtle->createCmd(1, 10, Advance);
-		
-		GV_turtle->appendCmds(adv);
-	}
-	GV_turtle->printCommandList();*/
+
 
 #pragma endregion
 
@@ -71,24 +62,22 @@ int main()
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseShape.setPosition(mousePos.x, mousePos.y);
 
-		//rotate
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			GV_turtle->rotate(2);
-			//GV_turtle->appendCmds(new Cmd,rotate)
+			GV_turtle->rotate(-2,dt);
+			//GV_turtle->appendCmds(new Cmd,rotate(2))
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			GV_turtle->rotate(-2);
+			GV_turtle->rotate(2,dt);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			GV_turtle->move(sf::Vector2f(5, 0));
+			GV_turtle->move(5,dt);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			GV_turtle->move(sf::Vector2f(-5, 0));
+			GV_turtle->move(-5,dt);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
@@ -110,7 +99,53 @@ int main()
 		{
 			GV_turtle->changeColor(sf::Color::Yellow);
 		}
-	
+
+
+		static bool APressed = false;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			FILE* fp = nullptr;
+			fopen_s(&fp, "cmd.txt", "rb");
+
+			if (fp && !feof(fp))
+			{
+				char line[256] = {};
+				for (;;)
+				{
+					int64_t nb = 0;
+					fscanf_s(fp, "%s %lld \n", line, 256, &nb);
+					std::string s = line;
+					if (s == "Advance")
+					{
+						GV_turtle->moveCmd(nb,dt);
+					}
+					if (s == "Rotate")
+					{
+						GV_turtle->rotate(nb,dt);
+					}
+					if (s == "PenUp")
+					{
+						GV_turtle->drawOn();
+					}
+					if (s == "PenDown")
+					{
+						GV_turtle->drawOff();
+					}
+					if (s == "PenColor")
+					{
+						GV_turtle->changeColor(sf::Color((unsigned int)nb));
+					}
+					if (feof(fp))
+					{
+						break;
+					}
+				}
+				fclose(fp);
+			}
+			APressed = true;
+		}
+		APressed = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
