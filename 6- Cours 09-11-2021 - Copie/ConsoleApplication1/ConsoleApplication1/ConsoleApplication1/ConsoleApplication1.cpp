@@ -42,18 +42,23 @@ int main()
 	sf::CircleShape mouseShape(5.f);
 	mouseShape.setFillColor(sf::Color::White);
 
+	//Lines
+	sf::VertexArray lines(sf::LineStrip, 100);
+	int linesidx = 0;
+
+
 	double tStart = getTimeStamp();
 	double tEnterFrame = getTimeStamp();
 	double tExitFrame = getTimeStamp();
 	CommandList* cmd1 = new CommandList(CommandList::CommandType::Advance, 1);
 
-	for (int i = 1; i < 10; i++)
+	/*for (int i = 1; i < 10; i++)
 	{
 		Cmd* adv = GV_turtle->createCmd(1, 10, Advance);
 		
 		GV_turtle->appendCmds(adv);
 	}
-	GV_turtle->printCommandList();
+	GV_turtle->printCommandList();*/
 
 #pragma endregion
 
@@ -71,6 +76,7 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			GV_turtle->rotate(2);
+			//GV_turtle->appendCmds(new Cmd,rotate)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
@@ -84,6 +90,26 @@ int main()
 		{
 			GV_turtle->move(sf::Vector2f(-5, 0));
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			GV_turtle->drawOn();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		{
+			GV_turtle->drawOff();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		{
+			GV_turtle->changeColor(sf::Color::Blue);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+		{
+			GV_turtle->changeColor(sf::Color::Red);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+		{
+			GV_turtle->changeColor(sf::Color::Yellow);
+		}
 	
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -94,9 +120,8 @@ int main()
 		}
 
 		window.clear();
-		window.draw(mouseShape);
-
-
+		window.draw(lines);
+		//window.draw(mouseShape);
 
 		GV_turtle->draw(window);
 

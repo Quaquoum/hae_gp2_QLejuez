@@ -1,11 +1,3 @@
-﻿  ConsoleApplication1.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\6- cours 09-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(67): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
-          with
-          [
-              T=int
-          ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\6- cours 09-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(31): warning C4101: 'block' : variable locale non référencée
-  turtle.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\6- cours 09-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\turtle.cpp(84): warning C4477: 'printf' : la chaîne de format '%i' nécessite un argument de type 'int', mais l'argument variadique 2 est de type 'double'
-  Génération de code en cours...
+﻿  turtle.cpp
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\6- cours 09-11-2021 - copie\consoleapplication1\consoleapplication1\consoleapplication1\turtle.cpp(95): warning C4477: 'printf' : la chaîne de format '%i' nécessite un argument de type 'int', mais l'argument variadique 2 est de type 'double'
   ConsoleApplication1.vcxproj -> C:\Users\Quaqu\Desktop\Cash Defender\Pinball\hae_gp2_QLejuez\6- Cours 09-11-2021 - Copie\ConsoleApplication1\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe

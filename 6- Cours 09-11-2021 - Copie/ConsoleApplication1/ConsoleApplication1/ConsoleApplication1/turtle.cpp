@@ -8,11 +8,14 @@ Turtle::Turtle(float posX, float posY) {
 	//auto& head
 	head = sf::CircleShape(6.f);
 	body = sf::CircleShape(12.f);
+	drawshape = sf::CircleShape(6.f);
 
 	head.setFillColor(sf::Color::White);
 	body.setFillColor(sf::Color::Green);
+	drawshape.setFillColor(sf::Color::Blue);
 
 	body.setOrigin(body.getRadius(), body.getRadius());
+	drawshape.setOrigin(body.getRadius(), body.getRadius());
 	head.setOrigin(body.getRadius() - 20, body.getRadius() - 5);
 
 	headOffset = sf::Vector2f(body.getRadius() + 10, body.getRadius() / 2);
@@ -20,16 +23,13 @@ Turtle::Turtle(float posX, float posY) {
 	/*
 	body.setPosition(posX,posY);
 	head.setPosition(posX + 20,posY + 4);*/
-	
+	turtleTexture = new sf::RenderTexture();
+	turtleTexture->create(2048, 2048);
+
+	drawTexture = new sf::RenderTexture();
+	drawTexture->create(2048, 2048);
+
 	this->trs.translate(posX,posY);
-}
-
-void Turtle::drawOn(sf::RenderWindow & win)
-{
-}
-
-void Turtle::drawOff(sf::RenderWindow & win)
-{
 }
 
 void Turtle::changeColor()
@@ -57,21 +57,32 @@ void Turtle::draw(sf::RenderWindow & win)
 
 	//for (auto& c : comps)
 		//win.draw(c, trs);
+	if (penOn)
+	{
+		turtleTexture->draw(drawshape, trs);
+	}
+	turtleTexture->display();
 
+	sf::Sprite sprite(turtleTexture->getTexture());
+	win.draw(sprite);
 	win.draw(head, trs);
 	win.draw(body, trs);
 }
 
-void Turtle::appendCmds(Cmd * cmds)
+void Turtle::changeColor(sf::Color color)
 {
-	int i = 0;
-	while (cmdList[i] != nullptr && i < 100)
+	drawshape.setFillColor(color);
+}
+
+void Turtle::appendCmds(Cmd * cmd)
+{
+	if (cmds)
 	{
-		i++;
+		cmds = cmds->append(cmd);
 	}
-	if (i < 100)
+	else
 	{
-		cmdList[i] = cmds;
+		cmds = cmd;
 	}
 	//ajouter a la fin de cmd
 }
@@ -89,43 +100,35 @@ void Turtle::printCommandList()
 
 Cmd * Turtle::applyCmd(Cmd * cmd, float dt)
 {
-	if (cmd == nullptr)
-		return nullptr;
-	//diminuer de current value
-
-	if (cmd->originalValue > 0)
+	switch (cmd->type)
 	{
-		cmd->currentValue -= dt;
-		if (cmd->currentValue <= 0)
-			return applyCmd(cmd->next, dt);
-	}
-	else
-	{
-		cmd->currentValue += dt;
-		if (cmd->currentValue <= 0)
-			return applyCmd(cmd->next, dt);
-	}
+	case Advance: 
+		trs.translate(0, cmd->originalValue); 
+		//if (penOn)
+		break;
 
-	if (cmd->type == Advance)
-	{
-		move(sf::Vector2f(cmd->originalValue, 0));
+	case Turn: trs.rotate(cmd->originalValue); break; break;
+	case PenUp: penOn = true; break;
+	case PenDown: penOn = false; break;
+	default:
+		break;
 	}
-	if (cmd->type == Turn)
-	{
-		rotate(cmd->originalValue);
-	}
-
-	//si fini renvoyer next et se supprimer
-
-	return applyCmd(cmd, dt);
+	return nullptr;
 }
 
-Cmd* Turtle::createCmd(float oValue, float curValue, CmdType ctype)
+/*Cmd* Turtle::createCmd(float oValue, float curValue, CmdType ctype)
 {
-	Cmd* cmds = new Cmd;
-	cmds->originalValue = oValue;
-	cmds->currentValue = curValue;
-	cmds->type = ctype;
-
+	Cmd* cmds;
 	return cmds;
+}*/
+
+void Turtle::drawOn()
+{
+	penOn = true;
+}
+
+void Turtle::drawOff()
+{
+	penOn = false;
+
 }
