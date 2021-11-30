@@ -43,12 +43,12 @@ void Turtle::rotateCmd(float rot, double dt)
 
 }
 
-void Turtle::move(float distance, double dt, float speed)
+void Turtle::move(float distance, double dt)
 {
 	trs.translate(distance,0);
 }
 
-void Turtle::moveCmd(float distance, double dt, float speed)
+void Turtle::moveCmd(float distance, double dt)
 {
 }
 

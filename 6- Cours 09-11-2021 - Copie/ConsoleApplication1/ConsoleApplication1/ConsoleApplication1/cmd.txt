@@ -1,5 +1,6 @@
 Advance 10
 Rotate 5
 PenUp
+PenColor
 Advance 10
 Pen Down

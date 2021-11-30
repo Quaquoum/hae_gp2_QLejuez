@@ -1,7 +1,5 @@
-// ConsoleApplication1.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-//
-
 #include <iostream>
+#include <cstdio>
 #include <SFML/Graphics.hpp>
 #include "Tool.hpp"
 #include "Utility.hpp"
@@ -11,6 +9,11 @@
 #include "Block.hpp"
 #include "turtle.hpp"
 #include "CommandList.hpp"
+
+
+#include "imconfig-SFML.h"
+#include "imgui.h"
+#include "imgui-SFML.h"
 
 EntityManager repo;
 
@@ -26,6 +29,7 @@ int main()
 	//Window
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Turtle Adventure");
 	window.setVerticalSyncEnabled(true);
+	ImGui::SFML::Init(window);
 
 	sf::RenderTexture turtleSprite;
 	Turtle turtle = Turtle(500, 600);
@@ -49,12 +53,20 @@ int main()
 	double tExitFrame = getTimeStamp();
 	CommandList* cmd1 = new CommandList(CommandList::CommandType::Advance, 1);
 
+	//imgui
+	float tortuePenColor[3] = { (float)255 / 255,(float)255 / 255,(float)255 / 255 };
+	float commandsnb = 0;
+
+
 
 
 #pragma endregion
+	sf::Clock deltaclock;
 
 	while (window.isOpen())
 	{
+
+		//dt
 		double dt = tExitFrame - tEnterFrame;
 		tEnterFrame = getTimeStamp();
 
@@ -117,7 +129,7 @@ int main()
 					std::string s = line;
 					if (s == "Advance")
 					{
-						GV_turtle->moveCmd(nb,dt);
+						GV_turtle->move(nb,dt);
 					}
 					if (s == "Rotate")
 					{
@@ -147,22 +159,175 @@ int main()
 		APressed = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
 
 		sf::Event event;
+
+#pragma region Imgui
+		//imgui
+		ImGui::SFML::Update(window, deltaclock.restart());
+		bool toolActive;
+		ImGui::Begin("Command Panel", &toolActive, ImGuiWindowFlags_MenuBar);
+		ImGui::Text("Commands :");
+		ImGui::Columns(2, "locations");
+
+		ImGui::SetColumnWidth(0,200);
+
+		if (ImGui::Button("Advance", ImVec2(200, 20)))
+		{
+			GV_turtle->move(5, dt);
+		}
+		if (ImGui::Button("back", ImVec2(200, 20)))
+		{
+			GV_turtle->move(-5, dt);
+		}
+		if (ImGui::Button("left", ImVec2(200, 20)))
+		{
+			GV_turtle->rotate(-8, dt);
+		}
+		if (ImGui::Button("right", ImVec2(200, 20)))
+		{
+			GV_turtle->rotate(8, dt);
+		}
+		ImGui::NextColumn();
+		if (ImGui::Button("Draw", ImVec2(200, 20)))
+		{
+			GV_turtle->drawOn();
+		}
+		if (ImGui::Button("Stop Drawing", ImVec2(200, 20)))
+		{
+			GV_turtle->drawOff();
+		}
+		if (ImGui::ColorEdit3("color", tortuePenColor))
+		{
+			sf::Color penColor;
+			penColor.r = tortuePenColor[0] * 255;
+			penColor.g = tortuePenColor[1] * 255;
+			penColor.b = tortuePenColor[2] * 255;
+			GV_turtle->changeColor(penColor);
+		}
+		ImGui::Text("Commands :");
+
+		static Cmd* head = nullptr;
+
+		if (ImGui::Button("+"))
+		{
+			auto p = new Cmd(Advance);
+			p->originalValue = p->currentValue = 5;
+			if (nullptr == head)
+			{
+				head = p;
+			}
+			else
+				head = head->append(p);
+		}
+
+		int idx = 0;
+		ImGui::Separator();
+		auto h = head;
+		while (h)
+		{
+			ImGui::PushID(idx);
+			ImGui::Value("idx", idx);
+			//combo pour changer la commande
+			static const char* items[] =
+			{
+			"Advance",
+			"Turn",
+			"PenUp",
+			"PenDown",
+			"PenColor",
+			};
+
+			ImGui::Combo("Cmd Type", (int*)&h->type, items, IM_ARRAYSIZE(items));
+
+			switch (h->type)
+			{
+			case CmdType::Clear:
+			case PenDown:
+			case PenUp:
+				break;
+			case PenColor:
+				if (ImGui::ColorEdit3("color", tortuePenColor))
+				{
+					sf::Color Col;
+					Col.r = tortuePenColor[0] * 255;
+					Col.g = tortuePenColor[1] * 255;
+					Col.b = tortuePenColor[2] * 255;
+				}
+				break;
+
+			default:
+				ImGui::DragFloat("value", &h->originalValue);
+				break;
+			}
+
+
+			if (ImGui::Button("Clear"))
+			{
+				h->type = Clear;
+			}
+			ImGui::NewLine();
+			ImGui::Separator();
+			h = h->next;
+			idx++;
+			ImGui::PopID();
+		}
+		
+		if (ImGui::Button("Run"))
+		{
+			if (h->type == Advance)
+			{
+				GV_turtle->move(h->originalValue, dt);
+			}
+			if (h->type == Turn)
+			{
+				GV_turtle->rotate(h->originalValue, dt);
+			}
+			if (h->type == PenUp)
+			{
+				GV_turtle->drawOn();
+			}
+			if (h->type == PenDown)
+			{
+				GV_turtle->drawOff();
+			}
+			if (h->type == PenColor)
+			{
+				//GV_turtle->changeColor(col);
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Load"))
+		{
+
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Save"))
+		{
+
+		}
+
+		ImGui::End();
+#pragma endregion
+
 		while (window.pollEvent(event))
 		{
+			ImGui::SFML::ProcessEvent(event);
 			double dt = tEnterFrame - tExitFrame;
 			if (event.type == sf::Event::Closed)
 			window.close();
 		}
 
+
 		window.clear();
 		window.draw(lines);
-		//window.draw(mouseShape);
+		window.draw(mouseShape);
 
 		GV_turtle->draw(window);
 
-		window.display();
 
+		ImGui::SFML::Render(window);
+		window.display();
 	}
 
+	ImGui::SFML::Shutdown();
 	return 0;
 }

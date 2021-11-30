@@ -13,6 +13,7 @@ enum CmdType
 	PenUp,
 	PenDown,
 	PenColor,
+	Clear,
 };
 
 struct Cmd

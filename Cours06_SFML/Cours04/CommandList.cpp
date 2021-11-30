@@ -1,22 +1,30 @@
 #include "CommandList.hpp"
 
-CommandList::CommandList(CommandType _type, float _val)
+CommandList::CommandList(CommandType _type, float _val, float _speed)
 {
 	cmd = new Command();
 	cmd->type = _type;
 	cmd->currentValue = cmd->originalValue = _val;
+	cmd->speed = _speed;
 
 	head = this;
 }
 
-CommandList::CommandList(CommandType _type, float _val, CommandList* _next)
+CommandList::CommandList(CommandType _type, float _val, float _speed, CommandList* _next)
 {
 	cmd = new Command();
 	cmd->type = _type;
 	cmd->currentValue = cmd->originalValue = _val;
+	cmd->speed = _speed;
 
 	next = _next;
 	head = this;
+}
+
+const char* CommandList::ConvertEnumToStr(int idx)
+{
+	const char* tmp(StrCommandType[idx]);
+	return tmp;
 }
 
 CommandList* CommandList::PushFirst(Command* _cmd)
@@ -58,6 +66,21 @@ CommandList* CommandList::RemoveFirst()
 	return head;
 }
 
+void CommandList::CleanList()
+{
+	if (this == nullptr)
+		return;
+	CommandList* curr = head;
+	CommandList* n = nullptr;
+	while (curr != nullptr)
+	{
+		n = curr->next;
+		free(curr);
+		curr = n;
+	}
+	head = nullptr;
+}
+
 
 CommandList::CommandList(Command* _cmd)
 {
@@ -77,8 +100,11 @@ CommandList::Command* CommandList::CreateCommand(CommandType _type, float value)
 
 void CommandList::PrintList()
 {
-	if (this == nullptr)
+	if (head == nullptr)
+	{
+		printf("List was empty");
 		return;
+	}
 	CommandList* newNode = head;
 
 	const char* cmdType = "";
@@ -91,6 +117,10 @@ void CommandList::PrintList()
 			cmdType = "Advance";
 		else if (tIndex == 1)
 			cmdType = "Turn";
+		else if (tIndex == 2)
+			cmdType = "PenUp";
+		else if (tIndex == 3)
+			cmdType = "PenDown";
 
 		printf(" { %s : %0.2f / %0.2f } ", cmdType, newNode->cmd->currentValue, newNode->cmd->originalValue);
 		if (newNode->next != nullptr)
