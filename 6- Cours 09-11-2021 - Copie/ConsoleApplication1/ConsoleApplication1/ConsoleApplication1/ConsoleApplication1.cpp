@@ -258,50 +258,38 @@ int main()
 				ImGui::DragFloat("value", &h->originalValue);
 				break;
 			}
+			
 
 
-			if (ImGui::Button("Clear"))
-			{
-				h->type = Clear;
-			}
 			ImGui::NewLine();
 			ImGui::Separator();
 			h = h->next;
 			idx++;
 			ImGui::PopID();
 		}
-		
+
 		if (ImGui::Button("Run"))
 		{
-			if (h->type == Advance)
+			if (head)
 			{
-				GV_turtle->move(h->originalValue, dt);
-			}
-			if (h->type == Turn)
-			{
-				GV_turtle->rotate(h->originalValue, dt);
-			}
-			if (h->type == PenUp)
-			{
-				GV_turtle->drawOn();
-			}
-			if (h->type == PenDown)
-			{
-				GV_turtle->drawOff();
-			}
-			if (h->type == PenColor)
-			{
-				//GV_turtle->changeColor(col);
+				GV_turtle->appendCmds(h);
 			}
 		}
+
+
 		ImGui::SameLine();
+		
 		if (ImGui::Button("Load"))
 		{
 
 		}
+
 		ImGui::SameLine();
+
 		if (ImGui::Button("Save"))
 		{
+			FILE* fp = nullptr;
+			fopen_s(&fp, "cmd.txt", "rb");
 
 		}
 
