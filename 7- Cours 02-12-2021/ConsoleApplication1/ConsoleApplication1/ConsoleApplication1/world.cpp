@@ -7,7 +7,24 @@ void world::createWall(int posX, int posY)
 	wall->cy = (posY / 32);
 	wall->px = ((wall->cx + wall->rx) * 32);
 	wall->py = ((wall->cy + wall->ry) * 32);
+	/*
+	wall->rx = (wall->px - wall->cx * 32) / 32;
+	wall->ry = (wall->py - wall->cy * 32) / 32;
+
+	if (wall->rx > 0.5)
+	{
+		wall->cx - 1;
+	}
+	if (wall->ry > 0.5)
+	{
+		wall->cy - 1;
+	}
+	wall->rx = 0;
+	wall->ry = 0;
+	*/
+
 	wall->spr.setFillColor(sf::Color::Blue);
+	
 
 	
 	int i = 0;

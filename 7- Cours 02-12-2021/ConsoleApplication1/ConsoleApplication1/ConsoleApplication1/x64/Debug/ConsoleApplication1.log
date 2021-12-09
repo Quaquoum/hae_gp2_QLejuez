@@ -1,8 +1,9 @@
-﻿  Character.cpp
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(10): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(27): warning C4305: '*=' : troncation de 'double' à 'float'
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(28): warning C4305: '*=' : troncation de 'double' à 'float'
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(29): warning C4305: '+=' : troncation de 'double' à 'float'
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(82): warning C4244: '=' : conversion de 'float' en 'int', perte possible de données
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\character.cpp(83): warning C4244: '=' : conversion de 'float' en 'int', perte possible de données
+﻿  world.cpp
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\world.cpp(59): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
+          with
+          [
+              T=float
+          ]
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\world.cpp(63): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\7- cours 02-12-2021\consoleapplication1\consoleapplication1\consoleapplication1\world.cpp(71): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
   ConsoleApplication1.vcxproj -> D:\Program files (Data)\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\7- Cours 02-12-2021\ConsoleApplication1\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
