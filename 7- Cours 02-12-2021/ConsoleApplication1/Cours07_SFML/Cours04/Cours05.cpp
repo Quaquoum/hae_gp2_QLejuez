@@ -87,7 +87,7 @@ int main()
 
 		player->update();
 
-		if (player->cx - 1 == wall->cx && player->rx >= 0.3f)
+		if (player->cx - 1 == wall->cx && player->rx >= 0.3f )
 		{
 			player->rx = 0.3f;
 			player->dx = 0;

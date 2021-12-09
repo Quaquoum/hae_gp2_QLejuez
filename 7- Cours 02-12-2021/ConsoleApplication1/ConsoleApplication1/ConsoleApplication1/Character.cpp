@@ -7,7 +7,7 @@ Character::Character()
 	spr.setFillColor(sf::Color::Green);
 	spr.setOutlineThickness(3);
 	spr.setOutlineColor(sf::Color::Red);
-	spr.setOrigin(spr.getSize().x * 0.5f, spr.getSize().y);
+	//spr.setOrigin(spr.getSize().x * 0.5f, spr.getSize().y * 0.5);
 
 	cx = 10;
 	cy = 10;
@@ -48,6 +48,7 @@ void Character::update(double dt)
 	py = ((cy + ry) * 32);
 
 	//Collisions
+	/*
 	if (hasCollision(cx + 1, cy) && rx >= 0.7) {
 		rx = 0.7;
 		dx = 0;
@@ -64,6 +65,7 @@ void Character::update(double dt)
 		dy = 0;
 		ry = 0.5;
 	}
+	*/
 
 	spr.setPosition(px, py);
 }
@@ -99,6 +101,11 @@ void Character::collided(Character other)
 	sf::Vector2f eOrigin = other.spr.getOrigin();
 
 
+}
+
+void Character::CreateWall(sf::Vector2i)
+{
+	
 }
 
 void Character::draw(sf::RenderWindow & win)

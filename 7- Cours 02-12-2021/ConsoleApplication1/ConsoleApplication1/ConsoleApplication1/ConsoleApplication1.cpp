@@ -49,6 +49,7 @@ int main()
 
 	Character* player = new Character();
 	Character* wall = new Character();
+	Character W;
 
 	wall->spr.setFillColor(sf::Color::Blue);
 	bool initialized = false;
@@ -103,6 +104,8 @@ int main()
 			//wall->setCoordinate(200, 200);
 			wall->cx = 5;
 			wall->cy = 5;
+			wall->rx = 0;
+			wall->ry = 0;
 			initialized = true;
 		}
 
@@ -115,7 +118,6 @@ int main()
 		{
 			player->move(-0.2f,0);
 			//player->rx -= 0.1;
-			player->cx = 20;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
@@ -130,9 +132,20 @@ int main()
 		{
 			player->move(0,0.2f);
 		}
-		if ((player->cx - 1 == wall->cx && player->rx >= 0.3f))
+		if (sf::Mouse::isButtonPressed)
+		{
+			W.CreateWall(mousePos);
+		}
+
+
+		if ((player->cx - 1 == wall->cx) && (player->cy == wall->cy - 1 || player->cy == wall->cy + 1 || player->cy == wall->cy))
 		{
 			player->rx += 0.05f;
+			player->dx = 0;
+		}
+		if ((player->cx + 1 == wall->cx) && player->cy == wall->cy)
+		{
+			player->rx -= 0.05f;
 			player->dx = 0;
 		}
 

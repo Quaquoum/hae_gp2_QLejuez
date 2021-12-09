@@ -39,6 +39,7 @@ public:
 	void setCoordinate(float x, float y);
 	bool hasCollision(float ncx, float ncy);
 	void collided(Character other);
+	void CreateWall(sf::Vector2i);
 
 	void draw(sf::RenderWindow& win);
 };
