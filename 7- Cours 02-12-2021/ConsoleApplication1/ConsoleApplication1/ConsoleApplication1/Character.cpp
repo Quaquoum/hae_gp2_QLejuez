@@ -3,11 +3,11 @@
 
 Character::Character()
 {
-	spr.setSize(sf::Vector2f(sf::Vector2f(100, 50)));
+	spr.setSize(sf::Vector2f(sf::Vector2f(32, 32)));
 	spr.setFillColor(sf::Color::Green);
 	spr.setOutlineThickness(3);
 	spr.setOutlineColor(sf::Color::Red);
-	
+	spr.setOrigin(spr.getSize().x * 0.5f, spr.getSize().y);
 
 	cx = 10;
 	cy = 10;

@@ -45,10 +45,12 @@ int main()
 	texture.loadFromFile("PlayerTexture");
 	sf::Sprite character();
 	*/
-	Character player;
-	Character wall;
 
-	wall.spr.setFillColor(sf::Color::Blue);
+
+	Character* player = new Character();
+	Character* wall = new Character();
+
+	wall->spr.setFillColor(sf::Color::Blue);
 	bool initialized = false;
 
 
@@ -86,6 +88,10 @@ int main()
 		//dt
 		double dt = tExitFrame - tEnterFrame;
 		tEnterFrame = getTimeStamp();
+		
+		sf::Time elapsed = deltaclock.getElapsedTime();
+		deltaclock.restart();
+		ImGui::SFML::Update(window, elapsed);
 
 		//get mouse position
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -93,35 +99,42 @@ int main()
 
 		if (!initialized)
 		{
-			player.setCoordinate(600, 600);
-			wall.setCoordinate(200, 200);
+			player->setCoordinate(600, 600);
+			//wall->setCoordinate(200, 200);
+			wall->cx = 5;
+			wall->cy = 5;
 			initialized = true;
 		}
 
 #pragma region Controls
 
-		wall.update(dt);
-		player.update(dt);
+		wall->update(dt);
+		player->update(dt);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			player.move(-0.2f,0);
-			//player.rx -= 0.1;
+			player->move(-0.2f,0);
+			//player->rx -= 0.1;
+			player->cx = 20;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			player.move(0.2f,0);
+			player->move(0.2f,0);
 			//player.rx += 0.1;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			player.move(0,-0.2f);
+			player->move(0,-0.2f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			player.move(0,0.2f);
+			player->move(0,0.2f);
 		}
-
+		if ((player->cx - 1 == wall->cx && player->rx >= 0.3f))
+		{
+			player->rx += 0.05f;
+			player->dx = 0;
+		}
 
 #pragma endregion
 
@@ -130,15 +143,18 @@ int main()
 #pragma region Imgui
 		
 		//imgui
-		ImGui::SFML::Update(window, deltaclock.restart());
-		bool toolActive;
-		ImGui::Begin("Command Panel", &toolActive, ImGuiWindowFlags_MenuBar);
-		ImGui::Columns(2, "locations");
-		ImGui::SetColumnWidth(0,200);
-		ImGui::Text("Cx : %i", player.cx);
-		ImGui::Text("Cy : %i", player.cy);
+		ImGui::Begin("Entities manager");
+		ImGui::Text("Player");
+		ImGui::Value("cx ", (int)player->cx);
+		ImGui::SameLine();
+		ImGui::Value(" cy ", (int)player->cy);
+		ImGui::Value("rx ", (float)player->rx);
+		ImGui::SameLine();
+		ImGui::Value(" ry ", (float)player->ry);
+		ImGui::Text("Wall");
 		ImGui::End();
 		//4
+
 #pragma endregion
 
 		while (window.pollEvent(event))
@@ -154,8 +170,8 @@ int main()
 		//window.draw(testChar);
 
 		ImGui::SFML::Render(window);
-		player.draw(window);
-		wall.draw(window);
+		player->draw(window);
+		wall->draw(window);
 
 		window.display();
 	}
