@@ -26,6 +26,10 @@ public:
 	float px = 0.0f;
 	float py = 0.0f;
 
+	//Frictions
+	float frictX = 0.80f;
+	float frictY = 0.80f;
+
 	void syncSprite();
 
 	void update(double dt);
@@ -33,12 +37,12 @@ public:
 
 	Character();
 
-	void jump();
+	void jump(float y);
 	void move(float x, float y);
 	void attack();
 	void setCoordinate(float x, float y);
 	bool hasCollision(float ncx, float ncy);
-	void collided(Character other);
+	void collided(Character* wall);
 	void CreateWall(sf::Vector2i);
 
 	void draw(sf::RenderWindow& win);

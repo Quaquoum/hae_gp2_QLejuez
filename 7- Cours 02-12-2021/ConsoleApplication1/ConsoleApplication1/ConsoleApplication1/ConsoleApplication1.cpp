@@ -13,6 +13,7 @@
 #include "Entity.hpp"
 #include "Character.hpp"
 #include "Game.hpp"
+#include "world.hpp"
 
 //EntityManager repo;
 
@@ -49,7 +50,7 @@ int main()
 
 	Character* player = new Character();
 	Character* wall = new Character();
-	Character W;
+	world world;
 
 	wall->spr.setFillColor(sf::Color::Blue);
 	bool initialized = false;
@@ -67,6 +68,8 @@ int main()
 	//imgui
 	float tortuePenColor[3] = { (float)255 / 255,(float)255 / 255,(float)255 / 255 };
 	float commandsnb = 0;
+
+	sf::VertexArray grid(sf::Lines, 2 * (50));
 
 
 	sf::CircleShape spr(8, 8);
@@ -106,12 +109,19 @@ int main()
 			wall->cy = 5;
 			wall->rx = 0;
 			wall->ry = 0;
+
+			world.initGrid();
+			for (int i = 0; i < 1000; i++)
+			{
+				world.wallList[i] = nullptr;
+			}
+
+
 			initialized = true;
 		}
 
 #pragma region Controls
 
-		wall->update(dt);
 		player->update(dt);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -126,27 +136,27 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			player->move(0,-0.2f);
+			player->move(0,-1);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-			player->move(0,0.2f);
+			//world.createWall(mousePos.x, mousePos.y);
+			player->cx = 7;
+			player->cy = 7;
+			player->rx = 0;
+			player->ry = 0;
 		}
-		if (sf::Mouse::isButtonPressed)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			W.CreateWall(mousePos);
+			world.createWall(mousePos.x, mousePos.y);
+			
 		}
-
-
-		if ((player->cx - 1 == wall->cx) && (player->cy == wall->cy - 1 || player->cy == wall->cy + 1 || player->cy == wall->cy))
+		
+		int nb = 0;
+		while (world.wallList[nb] != nullptr && nb < 1000)
 		{
-			player->rx += 0.05f;
-			player->dx = 0;
-		}
-		if ((player->cx + 1 == wall->cx) && player->cy == wall->cy)
-		{
-			player->rx -= 0.05f;
-			player->dx = 0;
+			player->collided(world.wallList[nb]);
+			nb++;
 		}
 
 #pragma endregion
@@ -156,7 +166,7 @@ int main()
 #pragma region Imgui
 		
 		//imgui
-		ImGui::Begin("Entities manager");
+		ImGui::Begin("Manager");
 		ImGui::Text("Player");
 		ImGui::Value("cx ", (int)player->cx);
 		ImGui::SameLine();
@@ -164,6 +174,8 @@ int main()
 		ImGui::Value("rx ", (float)player->rx);
 		ImGui::SameLine();
 		ImGui::Value(" ry ", (float)player->ry);
+		ImGui::Value("Friction X", (float)player->frictX);
+		ImGui::Value("Friction Y", (float)player->frictY);
 		ImGui::Text("Wall");
 		ImGui::End();
 		//4
@@ -185,7 +197,8 @@ int main()
 		ImGui::SFML::Render(window);
 		player->draw(window);
 		wall->draw(window);
-
+		world.drawGrid(window);
+		world.drawWalls(window);
 		window.display();
 	}
 

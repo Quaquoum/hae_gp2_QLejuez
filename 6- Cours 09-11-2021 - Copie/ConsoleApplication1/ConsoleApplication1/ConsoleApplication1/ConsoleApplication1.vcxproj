@@ -109,7 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\SFML-2.5.1\include;C:\Users\Quaqu\Desktop\Cash Defender\Pinball\hae_gp2_QLejuez\6- Cours 09-11-2021 - Copie\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\SFML-2.5.1\include;D:\Program files %28Data%29\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\7- Cours 02-12-2021\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\SFML-2.5.1\include;C:\Users\Quaqu\Desktop\Cash Defender\Pinball\hae_gp2_QLejuez\6- Cours 09-11-2021 - Copie\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\SFML-2.5.1\include;D:\Program files %28Data%29\Win\Users\Student\Desktop\GP2\hae_gp2_QLejuez\7- Cours 02-12-2021\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

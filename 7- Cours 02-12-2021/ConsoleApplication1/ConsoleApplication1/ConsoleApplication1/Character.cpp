@@ -7,7 +7,7 @@ Character::Character()
 	spr.setFillColor(sf::Color::Green);
 	spr.setOutlineThickness(3);
 	spr.setOutlineColor(sf::Color::Red);
-	//spr.setOrigin(spr.getSize().x * 0.5f, spr.getSize().y * 0.5);
+	spr.setOrigin(spr.getSize().x * 0.5f, spr.getSize().y * 0.5);
 
 	cx = 10;
 	cy = 10;
@@ -24,8 +24,8 @@ void Character::update(double dt)
 	//Movement
 	ry += dy;
 	rx += dx;
-	dx *= 0.80;
-	dy *= 0.80;
+	dx *= 0.60;
+	dy *= 0.90;
 
 	while (rx > 1) { 
 		rx--;	
@@ -48,34 +48,30 @@ void Character::update(double dt)
 	py = ((cy + ry) * 32);
 
 	//Collisions
-	/*
-	if (hasCollision(cx + 1, cy) && rx >= 0.7) {
-		rx = 0.7;
-		dx = 0;
-	}
-	if (hasCollision(cx - 1, cy) && rx <= 0.3) {
-		rx = 0.3;
-		dx = 0;
-	}
-	if (hasCollision(cx, cy - 1) && ry <= 0.3) {
-		dy = 0;
-		ry = 0.3;
-	}
-	if (hasCollision(cx, cy + 1) && ry >= 0.5) {
-		dy = 0;
-		ry = 0.5;
-	}
-	*/
+
+	
 
 	spr.setPosition(px, py);
 }
 
+void Character::jump(float y)
+{
+
+}
+
 void Character::move(float x, float y)
 {
-	if (x != 0)
+	if (x != 0 && cx > 0 && x < 0)
 	dx = x;
-	if (y != 0)
+
+	if (x != 0 && cx < 39 && x > 0)
+		dx = x;
+
+	if (y != 0 && cy > 0 && y < 0)
 	dy = y;
+
+	if (y != 0 && cy < 22 && y > 0)
+		dy = y;
 }
 
 void Character::setCoordinate(float x, float y)
@@ -92,20 +88,33 @@ bool Character::hasCollision(float ncx, float ncy)
 {
 	//check chaque entity
 
+
 	return false;
 }
 
-void Character::collided(Character other)
+void Character::collided(Character* wall)
 {
-	sf::Vector2f tOrigin = this->spr.getOrigin();
-	sf::Vector2f eOrigin = other.spr.getOrigin();
-
-
-}
-
-void Character::CreateWall(sf::Vector2i)
-{
-	
+	if ((cx - 1 == wall->cx && (cy == wall->cy || cy == wall->cy - 1)) && rx <= 0.2)
+	{
+		rx += 0.04f;
+		dx = 0;
+	}
+	if ((cx + 1 == wall->cx) && (cy == wall->cy || cy == wall->cy - 1))
+	{
+		rx -= 0.04f;
+		dx = 0;
+	}
+	if ((cy - 1 == wall->cy && (cx == wall->cx || cx == wall->cx - 1)) && ry <= 0.2)
+	{
+		ry += 0.04f;
+		dy = 0;
+	}
+	if ((cy + 1 == wall->cy) && (cx == wall->cx || cx == wall->cx - 1))
+	{
+		ry -= 0.04f;
+		dy = 0;
+	}
+	return;
 }
 
 void Character::draw(sf::RenderWindow & win)
