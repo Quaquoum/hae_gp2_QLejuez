@@ -142,6 +142,14 @@ int main()
 		{
 			player->move(0, 0.2f);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		{
+			player->sprint = true;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+		{
+			player->sprint = false;
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
 			//world.createWall(mousePos.x, mousePos.y);
@@ -201,7 +209,7 @@ int main()
 		ImGui::SFML::Render(window);
 		player->draw(window);
 		wall->draw(window);
-		world.drawGrid(window);
+		//world.drawGrid(window);
 		world.drawWalls(window);
 		window.display();
 	}

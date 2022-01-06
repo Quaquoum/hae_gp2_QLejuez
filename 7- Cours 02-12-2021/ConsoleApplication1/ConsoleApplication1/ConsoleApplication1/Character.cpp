@@ -49,7 +49,8 @@ void Character::update(double dt)
 
 	//Collisions
 
-	
+		spr.setFillColor(sf::Color::Red);
+
 
 	spr.setPosition(px, py);
 }
@@ -61,6 +62,18 @@ void Character::jump(float y)
 
 void Character::move(float x, float y)
 {
+	if (sprint == true)
+	{
+		x = x * 2;
+		y = y * 2;
+		spr.setFillColor(sf::Color::Magenta);
+	}
+	else
+	{
+		spr.setFillColor(sf::Color::Blue);
+	}
+
+
 	if (x != 0 && cx > 0 && x < 0)
 	dx = x;
 
@@ -98,26 +111,52 @@ void Character::collided(Character* wall)
 	{
 		rx += 0.04f;
 		dx = 0;
+		spr.setFillColor(sf::Color::Green);
 	}
 	if ((cx + 1 == wall->cx) && (cy == wall->cy || cy == wall->cy - 1))
 	{
 		rx -= 0.04f;
 		dx = 0;
+		spr.setFillColor(sf::Color::Green);
 	}
 	if ((cy - 1 == wall->cy && (cx == wall->cx || cx == wall->cx - 1)) && ry <= 0.2)
 	{
 		ry += 0.04f;
 		dy = 0;
+		spr.setFillColor(sf::Color::Green);
 	}
 	if ((cy + 1 == wall->cy) && (cx == wall->cx || cx == wall->cx - 1))
 	{
 		ry -= 0.04f;
 		dy = 0;
+		spr.setFillColor(sf::Color::Green);
 	}
 	return;
+}
+
+void Character::setState(State * state)
+{
+	/*if (currentState)
+		delete currentState;
+
+	currentState = state;
+	currentState->onEnter();*/
 }
 
 void Character::draw(sf::RenderWindow & win)
 {
 	win.draw(this->spr);
+}
+
+void IdleState::onEnter()
+{
+	e->spr.setOutlineColor(sf::Color::Blue);
+}
+
+void IdleState::onUpdate(double dt) {
+}
+
+void walkState::onEnter()
+{
+	e->spr.setOutlineColor(sf::Color::Red);
 }
