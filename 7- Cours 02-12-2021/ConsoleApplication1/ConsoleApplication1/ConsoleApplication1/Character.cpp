@@ -25,7 +25,7 @@ void Character::update(double dt)
 	ry += dy;
 	rx += dx;
 	dx *= 0.60;
-	dy *= 0.90;
+	dy *= 0.60;
 
 	while (rx > 1) { 
 		rx--;	

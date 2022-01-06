@@ -136,7 +136,11 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			player->move(0,-1);
+			player->move(0,-0.2f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			player->move(0, 0.2f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
