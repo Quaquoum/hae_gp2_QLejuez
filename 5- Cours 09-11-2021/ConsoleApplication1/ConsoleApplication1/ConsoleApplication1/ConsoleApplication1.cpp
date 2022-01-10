@@ -133,7 +133,7 @@ int main()
 	font.loadFromFile("Game Of Squids.ttf");
 
 	//Pad
-	sf::RectangleShape pad(sf::Vector2f(100, 20));
+	sf::RectangleShape pad(sf::Vector2f(60, 40));
 	pad.setFillColor(sf::Color::White);
 	pad.setOutlineThickness(2);
 	pad.setOutlineColor(sf::Color::Black);
@@ -169,7 +169,7 @@ int main()
 
 	//Background
 	sf::Texture texture;
-	texture.loadFromFile("Underwater texture.jpg", sf::IntRect(0, 0, 1280, 720));
+	texture.loadFromFile("Texture.jpg", sf::IntRect(0, 0, 1280, 720));
 	texture.setSmooth(true);
 	sf::Sprite background;
 	background.setTexture(texture);
@@ -271,21 +271,18 @@ int main()
 			pad.move(5, 0);
 		}
 
-		/*
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			shape.move(0, -5);
+			pad.move(0, -5);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			shape.move(0, 5);
+			pad.move(0, 5);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
 
 		}
-		*/
 	
 		
 		/*if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
@@ -300,12 +297,12 @@ int main()
             float x = 8.0f * cos(projRad);
             float y = 8.0f * sin(projRad);
 
-			if ((bullet.getPosition().y < 0) || playerHitbox.intersects(bulletHitbox))
+			/*if ((bullet.getPosition().y < 0) || playerHitbox.intersects(bulletHitbox))
 			{
 				reversedy *= -1.1;
 				bounceSound.play();
 				//Get position de l'intersection
-			}
+			}*/
 			if ((bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x))
 			{
 				reversedx *= -1.9;
@@ -325,7 +322,8 @@ int main()
 		//rotate
 		float angle = atan2(-offset.y, -offset.x) * (360 / (3.14 * 2));
 		gun.setRotation(angle);
-		gun.setPosition(pad.getPosition() + sf::Vector2f(0, 16));
+		gun.setOrigin(0, gun.getLocalBounds().height / 2.0f);
+		gun.setPosition(pad.getPosition());
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -337,7 +335,7 @@ int main()
 			//mouse gun
 			if (event.type == sf::Event::MouseButtonPressed && !hasFired)
 			{
-				bullet.setPosition(gun.getPosition().x, gun.getPosition().y - 50);
+				bullet.setPosition(gun.getPosition().x, gun.getPosition().y);
 				bullet.setRotation(gun.getRotation());
 				bullet.setFillColor(sf::Color::Magenta);
 				bullet.setOutlineColor(sf::Color::Black);
@@ -348,11 +346,15 @@ int main()
 
 		window.clear();
 		window.draw(background);
+
+		//Menu
+
+		//InGame
+		window.draw(bullet);
+		window.draw(gun);
 		window.draw(pad);
 		window.draw(text);
 		window.draw(mouseShape);
-		window.draw(bullet);
-		//window.draw(gun);
 		
 		for (int i = 0; i < 42; i++)
 		{
@@ -362,8 +364,6 @@ int main()
 			}
 		}
 
-		drawGround(window);
-		drawMountain(window);
 		window.display();
 
 	}
