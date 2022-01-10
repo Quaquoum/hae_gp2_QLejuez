@@ -36,11 +36,13 @@ int main()
 
 	//Time
 	sf::Clock clock;
-	sf::Time spawnCooldown = sf::seconds(5);
+	float spawnCooldown = 4.5;
+	float spawnCooldownTimer;
+	sf::Time elapsedTime;
 
 	//Block Array
 	Block* block[30];
-	int blockIdx = 0;
+
 
 	//Sound
 	sf::SoundBuffer buffer;
@@ -59,6 +61,7 @@ int main()
 	if (!music.openFromFile("Fish_Song.wav"))
 		return -1;
 	music.play();
+	music.setLoop(true);
 
 	//Load Font
 	sf::Font font;
@@ -123,6 +126,8 @@ int main()
 
 	bool hasBeenCalled = false;
 	bool brickAlternate = false;
+
+	int blockIdx = 0;
 
 	//test Collision
 	float left1 = playerHitbox.left;
@@ -241,22 +246,31 @@ int main()
 		
 #pragma region Spawning
 
-		
-		sf::Time elapsed1 = clock.getElapsedTime();
-		printf("%f \n", clock.getElapsedTime());
-		//std::cout << elapsed1.asSeconds() << std::endl;
-		if (spawnCooldown <= elapsed1)
-		{
-			printf("oula");
-			clock.restart();
-			block[blockIdx]->spawn(10, 10);
-			blockIdx++;
 
-			if (blockIdx >= 42)
+		elapsedTime = clock.getElapsedTime();
+		spawnCooldownTimer = elapsedTime.asSeconds();
+		//printf("%f \n", spawnCooldownTimer);
+		if (spawnCooldown <= spawnCooldownTimer)
+		{
+			clock.restart();
+			block[blockIdx]->spawn(rand() % 1200 + 10, 10);
+			blockIdx += 1;
+
+			//Cooldown Reducing
+			if (spawnCooldown > 0.7)
+			spawnCooldown -= 0.15;
+
+			if (blockIdx >= 29)
 			{
 				blockIdx = 0;
 			}
 		}
+
+
+#pragma endregion
+
+
+#pragma region Loop Music
 
 
 #pragma endregion
