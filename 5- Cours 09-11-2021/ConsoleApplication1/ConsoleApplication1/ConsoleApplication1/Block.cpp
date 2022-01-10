@@ -1,6 +1,7 @@
 #include "Block.hpp"
 
 Block::Block(float posX, float posY) {
+
 	int length = 80;
 	int height = 20;
 	b = sf::RectangleShape(sf::Vector2f(length, height));
@@ -11,8 +12,13 @@ Block::Block(float posX, float posY) {
 	b.setPosition(posX, posY);
 }
 
-void Block::create(float posX_, float posY_)
+void Block::spawn(float posX_, float posY_)
 {
+	if (!alive)
+	{
+		b.setPosition(posX_, posY_);
+		alive = true;
+	}
 }
 
 bool Block::collided(sf::FloatRect bulletHitbox)
@@ -36,9 +42,27 @@ void Block::killed()
 	alive = false;
 }
 
-void Block::createParticles()
+void Block::update(double dt, float playerPosX, float playerPosY)
 {
-
+	if (alive)
+	{
+		if (playerPosX > b.getPosition().x)
+		{
+			b.move(1, 0);
+		}
+		if (playerPosX < b.getPosition().x)
+		{
+			b.move(-1, 0);
+		}
+		if (playerPosY > b.getPosition().y)
+		{
+			b.move(0, 1);
+		}
+		if (playerPosY < b.getPosition().y)
+		{
+			b.move(0, -1);
+		}
+	}
 }
 
 void Block::draw(sf::RenderWindow& win) 

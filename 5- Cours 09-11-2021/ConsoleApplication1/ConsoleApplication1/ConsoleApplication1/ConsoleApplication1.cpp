@@ -9,6 +9,7 @@
 #include "Entity.hpp"
 #include <SFML/Audio.hpp>
 #include "Block.hpp"
+#include "Particles.hpp"
 
 EntityManager repo;
 
@@ -18,83 +19,6 @@ void drawParticles(sf::RenderWindow& window, sf::CircleShape particles[])
 
 	window.draw(particles[1]);
 }
-
-void drawMountain(sf::RenderWindow& window)
-{
-	sf::VertexArray arr;
-	arr.setPrimitiveType(sf::LinesStrip);
-	sf::Color col = sf::Color::Green;
-
-	sf::Vector2f a(0, 500);
-	sf::Vector2f b(300, 300);
-	sf::Vector2f c(900, 400);
-	sf::Vector2f d(window.getSize().x, 500);
-
-	for (int i = 0; i < 256; i++)
-	{
-		float t = 1.0f * i / 256;
-		//float x = (window.getSize().x - 0) * i / 255;
-		float x = catmull(a.x, a.x, b.x, c.x, t);
-		float y = catmull(a.y, a.y, b.y, c.y, t);
-		arr.append(sf::Vertex(sf::Vector2f(x, y), col));
-	}
-
-	for (int i = 0; i < 256; i++)
-	{
-		float t = 1.0f * i / 256;
-		//float x = (window.getSize().x - 0) * i / 255;
-		float x = catmull(a.x, b.x, c.x, d.x, t);
-		float y = catmull(a.y, b.y, c.y, d.y, t);
-		arr.append(sf::Vertex(sf::Vector2f(x, y), col));
-	}
-
-	for (int i = 0; i < 256; i++)
-	{
-		float t = 1.0f * i / 256;
-		//float x = (window.getSize().x - 0) * i / 255;
-		float x = catmull(b.x, c.x, d.x, d.x, t);
-		float y = catmull(b.y, c.y, d.y, d.y, t);
-		arr.append(sf::Vertex(sf::Vector2f(x, y), col));
-	}
-	/*
-	arr.append(sf::Vertex(a, col));
-	arr.append(sf::Vertex(b, col));
-	arr.append(sf::Vertex(c, col));
-	arr.append(sf::Vertex(d, col));
-	*/
-
-	window.draw(arr);
-}
-
-void drawGround(sf::RenderWindow& window)
-{
-	sf::VertexArray arr;
-	arr.setPrimitiveType(sf::LinesStrip);
-	sf::Color col = sf::Color::Yellow;
-
-	float baseline = 600 + 32;
-	sf::Vector2f a(0, baseline);
-	sf::Vector2f b(window.getSize().x, baseline);
-
-	arr.append(sf::Vertex(a, col));
-	arr.append(sf::Vertex(b, col));
-
-	window.draw(arr);
-}
-
-void createBlocks(Block block)
-{
-	for (int i = 0; i < 2; i++)
-	{
-		float posY = 30 * i + 10;
-		for (int j = 0; j < 16; j++)
-		{
-			float posX = 30 * j + 10;
-			block.create(posX,posY);
-		}
-	}
-}
-
 
 #pragma endregion
 
@@ -112,10 +36,11 @@ int main()
 
 	//Time
 	sf::Clock clock;
-	sf::Time time = sf::seconds(0.1f);
+	sf::Time spawnCooldown = sf::seconds(5);
 
 	//Block Array
 	Block* block[30];
+	int blockIdx = 0;
 
 	//Sound
 	sf::SoundBuffer buffer;
@@ -123,14 +48,23 @@ int main()
 		return -1;
 	sf::Sound bounceSound;
 	bounceSound.setBuffer(buffer);
-	if (!buffer.loadFromFile("explosion.wav"))
+	sf::SoundBuffer buffer2;
+	if (!buffer2.loadFromFile("explosion.wav"))
 		return -1;
 	sf::Sound explodeSound;
-	explodeSound.setBuffer(buffer);
+	explodeSound.setBuffer(buffer2);
+
+	//music
+	sf::Music music;
+	if (!music.openFromFile("Fish_Song.wav"))
+		return -1;
+	music.play();
 
 	//Load Font
 	sf::Font font;
 	font.loadFromFile("Game Of Squids.ttf");
+
+	//particles
 
 	//Pad
 	sf::RectangleShape pad(sf::Vector2f(60, 40));
@@ -145,7 +79,7 @@ int main()
 	//Gun
 	sf::RectangleShape gun(sf::Vector2f(70, 20));
 	gun.setFillColor(sf::Color::Cyan);
-	bool hasFired = false;
+	bool canFire = true;
 
 	//origin
 	sf::CircleShape originShape(5.f);
@@ -160,7 +94,7 @@ int main()
 	//Bullet
 	sf::CircleShape bullet(8.f);
 	bullet.setFillColor(sf::Color(0, 0, 0, 0));
-	bullet.setOutlineThickness(2);
+	bullet.setOutlineThickness(0);
 	sf::FloatRect bulletHitbox = bullet.getGlobalBounds();
 
 	sf::Vector2f bulletPos;
@@ -198,7 +132,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		//Scale Background
+		double dt = tEnterFrame - tExitFrame;
 
 		//create blocks
 		if (hasBeenCalled == false)
@@ -216,14 +150,15 @@ int main()
 			hasBeenCalled = true;
 		}
 
+#pragma region Collisions Bricks
 		//Check collisions
 		bulletHitbox = bullet.getGlobalBounds();
 		playerHitbox = pad.getGlobalBounds();
 
 		bool touched = false;
-		bool shake = false;
 		for (int i = 0; i < 42; i++)
 		{
+			block[i]->update(dt,pad.getPosition().x, pad.getPosition().y);
 			if (block[i]->alive == true && block[i]->collided(bulletHitbox))
 			{
 				explodeSound.play();
@@ -235,15 +170,8 @@ int main()
 				text.setString(scoretext);
 				touched = true;
 
-				//Particles
-
-				//ScreenShake
-				/*for (int i = 0; i < 20; i++)
-				{
-					view.move(100 * rand(), 100 * rand());
-					window.setView(view);
-				}
-				view.reset(sf::FloatRect(1280.f, 720.f, 300.f, 200.f));*/
+					canFire = true;
+				bullet.setFillColor(sf::Color(0, 0, 0, 0));
 
 			}
 		}
@@ -251,8 +179,9 @@ int main()
 		{
 			reversedy *= -1.1;
 		}
-		
+#pragma endregion
 
+#pragma region Controls
 		//get mouse position
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseShape.setPosition(mousePos.x, mousePos.y);
@@ -281,45 +210,62 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-
+			bounceSound.play();
 		}
-	
-		
-		/*if (bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x || bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y)
-		{
-			
-		}*/
+#pragma endregion
+
+#pragma region Shooting
 
 		if (bullet.getFillColor() == sf::Color::Magenta)
 		{
 			//Move Bullet
 			float projRad = 3.14 / 180 * bullet.getRotation();
-            float x = 8.0f * cos(projRad);
-            float y = 8.0f * sin(projRad);
+			float x = 8.0f * cos(projRad);
+			float y = 8.0f * sin(projRad);
 
-			/*if ((bullet.getPosition().y < 0) || playerHitbox.intersects(bulletHitbox))
+			if ((bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y))
 			{
 				reversedy *= -1.1;
 				bounceSound.play();
-				//Get position de l'intersection
-			}*/
+			}
 			if ((bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x))
 			{
 				reversedx *= -1.9;
 				bounceSound.play();
 			}
 
-			//collide with pad
-
-
 			bullet.move(x * reversedx, y * reversedy);
 		}
+
+#pragma endregion
 		
+#pragma region Spawning
+
+		
+		sf::Time elapsed1 = clock.getElapsedTime();
+		printf("%f \n", clock.getElapsedTime());
+		//std::cout << elapsed1.asSeconds() << std::endl;
+		if (spawnCooldown <= elapsed1)
+		{
+			printf("oula");
+			clock.restart();
+			block[blockIdx]->spawn(10, 10);
+			blockIdx++;
+
+			if (blockIdx >= 42)
+			{
+				blockIdx = 0;
+			}
+		}
+
+
+#pragma endregion
+
 
 		//set Center
 		pad.setOrigin(pad.getLocalBounds().width / 2.0f, pad.getLocalBounds().height / 2.0f);
 
-		//rotate
+		//rotate Gun
 		float angle = atan2(-offset.y, -offset.x) * (360 / (3.14 * 2));
 		gun.setRotation(angle);
 		gun.setOrigin(0, gun.getLocalBounds().height / 2.0f);
@@ -328,19 +274,27 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			double dt = tEnterFrame - tExitFrame;
+
+
 			if (event.type == sf::Event::Closed)
 			window.close();
 
 			//mouse gun
-			if (event.type == sf::Event::MouseButtonPressed && !hasFired)
+			if (event.type == sf::Event::MouseButtonPressed && canFire)
 			{
+				reversedx = 1;
+				reversedy = 1;
+
 				bullet.setPosition(gun.getPosition().x, gun.getPosition().y);
 				bullet.setRotation(gun.getRotation());
 				bullet.setFillColor(sf::Color::Magenta);
 				bullet.setOutlineColor(sf::Color::Black);
-				hasFired = true;
+				canFire = false;
 
+			}
+			if (canFire)
+			{
+				//Faire un cooldown
 			}
 		}
 
