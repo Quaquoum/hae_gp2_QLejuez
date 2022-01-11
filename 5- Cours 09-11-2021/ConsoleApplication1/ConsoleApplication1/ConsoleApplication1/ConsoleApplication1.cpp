@@ -36,7 +36,7 @@ int main()
 
 	//Time
 	sf::Clock clock;
-	float spawnCooldown = 4.5;
+	float spawnCooldown = 2.5;
 	float spawnCooldownTimer;
 	sf::Time elapsedTime;
 
@@ -50,11 +50,18 @@ int main()
 		return -1;
 	sf::Sound bounceSound;
 	bounceSound.setBuffer(buffer);
+
 	sf::SoundBuffer buffer2;
 	if (!buffer2.loadFromFile("explosion.wav"))
 		return -1;
 	sf::Sound explodeSound;
 	explodeSound.setBuffer(buffer2);
+
+	sf::SoundBuffer buffer3;
+	if (!buffer3.loadFromFile("Piou.wav"))
+		return -1;
+	sf::Sound shootSound;
+	shootSound.setBuffer(buffer3);
 
 	//music
 	sf::Music music;
@@ -71,9 +78,9 @@ int main()
 
 	//Pad
 	sf::RectangleShape pad(sf::Vector2f(60, 40));
-	pad.setFillColor(sf::Color::White);
-	pad.setOutlineThickness(2);
-	pad.setOutlineColor(sf::Color::Black);
+	pad.setFillColor(sf::Color::Black);
+	pad.setOutlineThickness(3);
+	pad.setOutlineColor(sf::Color::White);
 	sf::Vector2f shapePosition = pad.getPosition();
 	pad.setOrigin(580, 280);
 	pad.setPosition(580, 630);
@@ -81,7 +88,9 @@ int main()
 
 	//Gun
 	sf::RectangleShape gun(sf::Vector2f(70, 20));
-	gun.setFillColor(sf::Color::Cyan);
+	gun.setFillColor(sf::Color::Black);
+	gun.setOutlineThickness(3);
+	gun.setOutlineColor(sf::Color::White);
 	bool canFire = true;
 
 	//origin
@@ -96,8 +105,7 @@ int main()
 
 	//Bullet
 	sf::CircleShape bullet(8.f);
-	bullet.setFillColor(sf::Color(0, 0, 0, 0));
-	bullet.setOutlineThickness(0);
+	bullet.setFillColor(sf::Color::Magenta);
 	sf::FloatRect bulletHitbox = bullet.getGlobalBounds();
 
 	sf::Vector2f bulletPos;
@@ -128,6 +136,7 @@ int main()
 	bool brickAlternate = false;
 
 	int blockIdx = 0;
+	bool aliveBullet = false;
 
 	//test Collision
 	float left1 = playerHitbox.left;
@@ -164,7 +173,7 @@ int main()
 		for (int i = 0; i < 42; i++)
 		{
 			block[i]->update(dt,pad.getPosition().x, pad.getPosition().y);
-			if (block[i]->alive == true && block[i]->collided(bulletHitbox))
+			if (block[i]->alive == true && block[i]->collided(bulletHitbox) && aliveBullet == true)
 			{
 				explodeSound.play();
 				block[i]->killed();
@@ -175,8 +184,8 @@ int main()
 				text.setString(scoretext);
 				touched = true;
 
-					canFire = true;
-				bullet.setFillColor(sf::Color(0, 0, 0, 0));
+				canFire = true;
+				aliveBullet = false;
 
 			}
 		}
@@ -196,20 +205,20 @@ int main()
 		offset.y -= mousePos.y;
 
 		auto pos = pad.getPosition();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && pad.getPosition().x > 10)
 		{
 			pad.move(-5, 0);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && pad.getPosition().x < 1270)
 		{
 			pad.move(5, 0);
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && pad.getPosition().y > 10)
 		{
 			pad.move(0, -5);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && pad.getPosition().y < 710)
 		{
 			pad.move(0, 5);
 		}
@@ -221,7 +230,7 @@ int main()
 
 #pragma region Shooting
 
-		if (bullet.getFillColor() == sf::Color::Magenta)
+		if (aliveBullet)
 		{
 			//Move Bullet
 			float projRad = 3.14 / 180 * bullet.getRotation();
@@ -230,13 +239,17 @@ int main()
 
 			if ((bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y))
 			{
-				reversedy *= -1.1;
+				//reversedy *= -1.1;
 				bounceSound.play();
+				aliveBullet = false;
+				canFire = true;
 			}
 			if ((bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x))
 			{
-				reversedx *= -1.9;
+				//reversedx *= -1.9;
 				bounceSound.play();
+				aliveBullet = false;
+				canFire = true;
 			}
 
 			bullet.move(x * reversedx, y * reversedy);
@@ -257,20 +270,14 @@ int main()
 			blockIdx += 1;
 
 			//Cooldown Reducing
-			if (spawnCooldown > 0.7)
-			spawnCooldown -= 0.15;
+			if (spawnCooldown > 0.5)
+			spawnCooldown -= 0.05;
 
 			if (blockIdx >= 29)
 			{
 				blockIdx = 0;
 			}
 		}
-
-
-#pragma endregion
-
-
-#pragma region Loop Music
 
 
 #pragma endregion
@@ -296,19 +303,15 @@ int main()
 			//mouse gun
 			if (event.type == sf::Event::MouseButtonPressed && canFire)
 			{
+				shootSound.play();
 				reversedx = 1;
 				reversedy = 1;
 
 				bullet.setPosition(gun.getPosition().x, gun.getPosition().y);
 				bullet.setRotation(gun.getRotation());
-				bullet.setFillColor(sf::Color::Magenta);
-				bullet.setOutlineColor(sf::Color::Black);
+				aliveBullet = true;
 				canFire = false;
 
-			}
-			if (canFire)
-			{
-				//Faire un cooldown
 			}
 		}
 
@@ -318,18 +321,22 @@ int main()
 		//Menu
 
 		//InGame
-		window.draw(bullet);
-		window.draw(gun);
+
+		if (aliveBullet)
+		{
+			window.draw(bullet);
+		}
+
+
+		
 		window.draw(pad);
+		window.draw(gun);
 		window.draw(text);
 		window.draw(mouseShape);
 		
 		for (int i = 0; i < 42; i++)
 		{
-			if (block[i]->alive == true)
-			{
-				block[i]->draw(window);
-			}
+			block[i]->draw(window);
 		}
 
 		window.display();
