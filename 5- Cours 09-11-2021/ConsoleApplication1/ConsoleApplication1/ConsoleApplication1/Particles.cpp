@@ -16,7 +16,7 @@ void Particles::update(double dt)
 {
 	if (alive)
 	{
-		b.move(moveX/80, moveY/80);
+		b.move((moveX - 1) * 1.2, (moveY - 1) * 1.2);
 		b.scale(0.95f, 0.95f);
 		if (b.getScale().x < 0.1)
 		{

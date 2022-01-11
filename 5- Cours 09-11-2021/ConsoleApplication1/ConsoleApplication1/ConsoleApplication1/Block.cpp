@@ -54,9 +54,9 @@ void Block::killed()
 	alive = false;
 	for (int i = 0; i < 10; i++)
 	{
-		unsigned int moveX = (rand() % 200 + (-100));
-		unsigned int moveY = (rand() % 200 + (-100));
-		parts[i]->blockdeath(b.getPosition(),moveX,moveY);
+		float moveX = (rand() % 200 + 0);
+		float moveY = (rand() % 200 + 0);
+		parts[i]->blockdeath(b.getPosition(),moveX/100,moveY/100);
 	}
 }
 
