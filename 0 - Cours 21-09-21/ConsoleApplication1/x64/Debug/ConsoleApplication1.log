@@ -1,7 +1,0 @@
-﻿  ConsoleApplication1.cpp
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(301): error C2065: 'IntTree' : identificateur non déclaré
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(301): error C2065: 'toto' : identificateur non déclaré
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(301): error C3861: 'create' : identificateur introuvable
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(303): error C3861: 'count' : identificateur introuvable
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(304): error C2065: 'toto' : identificateur non déclaré
-d:\program files (data)\win\users\student\desktop\gp2\hae_gp2_qlejuez\1 - cours 21-09-21\consoleapplication1\consoleapplication1.cpp(304): error C3861: 'count' : identificateur introuvable
