@@ -27,7 +27,7 @@ int main()
 #pragma region Variables
 
 	//Window
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "The Witcher 3");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Untitled Space Game");
 	window.setVerticalSyncEnabled(true);
 	sf::Vector2i windowPosition = window.getPosition();
 	sf::View view(sf::Vector2f(1280/2, 720/2), sf::Vector2f(300.f, 200.f));
@@ -85,6 +85,7 @@ int main()
 	pad.setOrigin(580, 280);
 	pad.setPosition(580, 630);
 	sf::FloatRect playerHitbox = pad.getGlobalBounds();
+	bool playerAlive = true;
 
 	//Gun
 	sf::RectangleShape gun(sf::Vector2f(70, 20));
@@ -127,6 +128,23 @@ int main()
 	text.setFillColor(sf::Color::Yellow);
 	int score = 0;
 	sf::String scoretext;
+
+	//Game Over Text
+	sf::Text gameOverText("Game Over", font);
+	gameOverText.setCharacterSize(80);
+	gameOverText.setStyle(sf::Text::Bold);
+	gameOverText.setFillColor(sf::Color::White);
+	sf::FloatRect textRect = gameOverText.getLocalBounds();
+	gameOverText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+	gameOverText.setPosition(1280/2,200);
+
+	sf::Text restartText("Press R to restart", font);
+	restartText.setCharacterSize(60);
+	restartText.setStyle(sf::Text::Bold);
+	restartText.setFillColor(sf::Color::Red);
+	sf::FloatRect restartTextRect = restartText.getLocalBounds();
+	restartText.setOrigin(restartTextRect.left + restartTextRect.width / 2.0f, restartTextRect.top + restartTextRect.height / 2.0f);
+	restartText.setPosition(1280 / 2, 400);
 
 	double tStart = getTimeStamp();
 	double tEnterFrame = getTimeStamp();
@@ -172,7 +190,9 @@ int main()
 		bool touched = false;
 		for (int i = 0; i < 42; i++)
 		{
+			if (playerAlive)
 			block[i]->update(dt,pad.getPosition().x, pad.getPosition().y);
+
 			if (block[i]->alive == true && block[i]->collided(bulletHitbox) && aliveBullet == true)
 			{
 				explodeSound.play();
@@ -187,6 +207,11 @@ int main()
 				canFire = true;
 				aliveBullet = false;
 
+			}
+			if (block[i]->alive == true && block[i]->collided(playerHitbox) && playerAlive == true)
+			{
+				explodeSound.play();
+				playerAlive = false;
 			}
 		}
 		if (touched)
@@ -205,27 +230,43 @@ int main()
 		offset.y -= mousePos.y;
 
 		auto pos = pad.getPosition();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && pad.getPosition().x > 10)
+		if (playerAlive)
 		{
-			pad.move(-5, 0);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && pad.getPosition().x > 10)
+			{
+				pad.move(-5, 0);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && pad.getPosition().x < 1270)
+			{
+				pad.move(5, 0);
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && pad.getPosition().y > 10)
+			{
+				pad.move(0, -5);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && pad.getPosition().y < 710)
+			{
+				pad.move(0, 5);
+			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && pad.getPosition().x < 1270)
+		if (!playerAlive)
 		{
-			pad.move(5, 0);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+			{
+				pad.setPosition(580, 630);
+				for (int i = 0; i < 42; i++)
+				{
+					block[i]->alive = false;
+				}
+				float spawnCooldown = 2.5;
+				score = 0;
+				scoretext = (to_string(score));
+				text.setString(scoretext);
+				playerAlive = true;
+			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && pad.getPosition().y > 10)
-		{
-			pad.move(0, -5);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && pad.getPosition().y < 710)
-		{
-			pad.move(0, 5);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-		{
-			bounceSound.play();
-		}
 #pragma endregion
 
 #pragma region Shooting
@@ -263,7 +304,7 @@ int main()
 		elapsedTime = clock.getElapsedTime();
 		spawnCooldownTimer = elapsedTime.asSeconds();
 		//printf("%f \n", spawnCooldownTimer);
-		if (spawnCooldown <= spawnCooldownTimer)
+		if (spawnCooldown <= spawnCooldownTimer && playerAlive)
 		{
 			clock.restart();
 			block[blockIdx]->spawn(rand() % 1200 + 10, 10);
@@ -301,7 +342,7 @@ int main()
 			window.close();
 
 			//mouse gun
-			if (event.type == sf::Event::MouseButtonPressed && canFire)
+			if (event.type == sf::Event::MouseButtonPressed && canFire && playerAlive)
 			{
 				shootSound.play();
 				reversedx = 1;
@@ -328,11 +369,18 @@ int main()
 		}
 
 
-		
-		window.draw(pad);
-		window.draw(gun);
+		if (playerAlive)
+		{
+			window.draw(pad);
+			window.draw(gun);
+		}
+		if (!playerAlive)
+		{
+			window.draw(gameOverText);
+			window.draw(restartText);
+		}
+
 		window.draw(text);
-		window.draw(mouseShape);
 		
 		for (int i = 0; i < 42; i++)
 		{
