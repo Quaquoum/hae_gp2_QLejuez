@@ -36,8 +36,9 @@ int main()
 
 	//Time
 	sf::Clock clock;
-	float spawnCooldown = 2.5;
+	float spawnCooldown = 1.5;
 	float spawnCooldownTimer;
+	float textTimer;
 	sf::Time elapsedTime;
 
 	//Block Array
@@ -85,7 +86,7 @@ int main()
 	pad.setOrigin(580, 280);
 	pad.setPosition(580, 630);
 	sf::FloatRect playerHitbox = pad.getGlobalBounds();
-	bool playerAlive = true;
+	bool playerAlive = false;
 
 	//Gun
 	sf::RectangleShape gun(sf::Vector2f(70, 20));
@@ -130,7 +131,7 @@ int main()
 	sf::String scoretext;
 
 	//Game Over Text
-	sf::Text gameOverText("Game Over", font);
+	sf::Text gameOverText("Untitled Space Game", font);
 	gameOverText.setCharacterSize(80);
 	gameOverText.setStyle(sf::Text::Bold);
 	gameOverText.setFillColor(sf::Color::White);
@@ -138,7 +139,7 @@ int main()
 	gameOverText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 	gameOverText.setPosition(1280/2,200);
 
-	sf::Text restartText("Press R to restart", font);
+	sf::Text restartText("Press R to start", font);
 	restartText.setCharacterSize(60);
 	restartText.setStyle(sf::Text::Bold);
 	restartText.setFillColor(sf::Color::Red);
@@ -264,6 +265,16 @@ int main()
 				scoretext = (to_string(score));
 				text.setString(scoretext);
 				playerAlive = true;
+
+				//Text
+				restartText.setString("Press R to restart");
+				restartTextRect = restartText.getLocalBounds();
+				restartText.setOrigin(restartTextRect.left + restartTextRect.width / 2.0f, restartTextRect.top + restartTextRect.height / 2.0f);
+
+				gameOverText.setString("Game Over");
+				textRect = gameOverText.getLocalBounds();
+				gameOverText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+
 			}
 		}
 
@@ -303,6 +314,8 @@ int main()
 
 		elapsedTime = clock.getElapsedTime();
 		spawnCooldownTimer = elapsedTime.asSeconds();
+		textTimer = elapsedTime.asSeconds();
+
 		//printf("%f \n", spawnCooldownTimer);
 		if (spawnCooldown <= spawnCooldownTimer && playerAlive)
 		{
@@ -374,18 +387,24 @@ int main()
 			window.draw(pad);
 			window.draw(gun);
 		}
-		if (!playerAlive)
-		{
-			window.draw(gameOverText);
-			window.draw(restartText);
-		}
 
-		window.draw(text);
-		
 		for (int i = 0; i < 42; i++)
 		{
 			block[i]->draw(window);
 		}
+
+		if (!playerAlive)
+		{
+			window.draw(gameOverText);
+			if (textTimer > 0.4)
+			{
+				window.draw(restartText);
+				if (textTimer > 1.4)
+					clock.restart();
+			}
+		}
+
+		window.draw(text);
 
 		window.display();
 
