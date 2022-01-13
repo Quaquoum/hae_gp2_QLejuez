@@ -5,22 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include "Tool.hpp"
 #include "Utility.hpp"
-//#include "Bullet.hpp"
+#include "Bullet.hpp"
 #include "Entity.hpp"
 #include <SFML/Audio.hpp>
 #include "Block.hpp"
 #include "Particles.hpp"
 
 EntityManager repo;
-
-#pragma region Functions
-void drawParticles(sf::RenderWindow& window, sf::CircleShape particles[])
-{
-
-	window.draw(particles[1]);
-}
-
-#pragma endregion
 
 int main()
 {
@@ -41,8 +32,17 @@ int main()
 	float textTimer;
 	sf::Time elapsedTime;
 
+	sf::Clock clockShooting;
+	float shootCooldown = 0.8;
+	float shootCooldownTimer = 0;
+	sf::Time bulletElapsedTime;
+
 	//Block Array
-	Block* block[30];
+	Block* block[20];
+
+	//Bullet Array
+	Bullet* bullet[15];
+	int curHP = 1;
 
 
 	//Sound
@@ -63,6 +63,12 @@ int main()
 		return -1;
 	sf::Sound shootSound;
 	shootSound.setBuffer(buffer3);
+
+	sf::SoundBuffer buffer4;
+	if (!buffer4.loadFromFile("Lvlup.wav"))
+		return -1;
+	sf::Sound lvlupSound;
+	lvlupSound.setBuffer(buffer4);
 
 	//music
 	sf::Music music;
@@ -105,10 +111,10 @@ int main()
 	sf::CircleShape mouseShape(5.f);
 	mouseShape.setFillColor(sf::Color::White);
 
-	//Bullet
+	/*Bullet
 	sf::CircleShape bullet(8.f);
 	bullet.setFillColor(sf::Color::Magenta);
-	sf::FloatRect bulletHitbox = bullet.getGlobalBounds();
+	sf::FloatRect bulletHitbox = bullet.getGlobalBounds();*/
 
 	sf::Vector2f bulletPos;
 	int reversedx = 1;
@@ -122,13 +128,24 @@ int main()
 	background.setTexture(texture);
 
 	//Text
-	sf::Text text("0", font);
-	text.setPosition(10, 0);
+	sf::Text text("0 / 600", font);
+	text.setPosition(10, 70);
 	text.setCharacterSize(30);
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::Yellow);
 	int score = 0;
+	int xpNeeded;
 	sf::String scoretext;
+
+	//Lvl up Text
+	sf::Text lvlupText("lvl : 1", font);
+	lvlupText.setPosition(10, 10);
+	lvlupText.setCharacterSize(30);
+	lvlupText.setStyle(sf::Text::Bold);
+	lvlupText.setFillColor(sf::Color::Yellow);
+	sf::String lvlText;
+	int lvl = 1;
+
 
 	//Game Over Text
 	sf::Text gameOverText("Untitled Space Game", font);
@@ -167,47 +184,66 @@ int main()
 	{
 		double dt = tEnterFrame - tExitFrame;
 
-		//create blocks
+		//create blocks & bullets
 		if (hasBeenCalled == false)
 		{
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 20; i++)
 			{
-				float posY = 100 * i + 60;
-				for (int j = 0; j < 14; j++)
 				{
-					float posX = 90 * j + 60;
-					Block* b = new Block(posX, posY);
-					block[j + i*14] = b;
+				Block* b = new Block(50, 50);
+				block[i] = b;
 				}
+			}
+
+			for (int i = 0; i < 15; i++)
+			{
+				float posX = 20 * i;
+				Bullet* b = new Bullet(posX, 10);
+				bullet[i] = b;
 			}
 			hasBeenCalled = true;
 		}
 
 #pragma region Collisions Bricks
 		//Check collisions
-		bulletHitbox = bullet.getGlobalBounds();
 		playerHitbox = pad.getGlobalBounds();
 
 		bool touched = false;
-		for (int i = 0; i < 42; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			if (playerAlive)
 			block[i]->update(dt,pad.getPosition().x, pad.getPosition().y);
 
-			if (block[i]->alive == true && block[i]->collided(bulletHitbox) && aliveBullet == true)
+			for (int j = 0; j < 15; j++)
 			{
-				explodeSound.play();
-				block[i]->killed();
-				score += 100;
-				char numstr[10];
-				//sprintf(numstr, "%i", score);
-				scoretext = (to_string(score));
-				text.setString(scoretext);
-				touched = true;
+				if(block[i]->alive == true)
 
-				canFire = true;
-				aliveBullet = false;
+				if (block[i]->alive == true && block[i]->collided(bullet[j]->bulletHitbox) && bullet[j]->alive == true)
+				{
+					explodeSound.play();
+					block[i]->killed();
+					bullet[j]->killed();
+					score += 100;
 
+					//Lvl up
+					if (score >= (500 * lvl * 1.2))
+					{
+						lvlupSound.play();
+						score = 0;
+						lvl += 1;
+						lvlText = ("lvl : " + to_string(lvl));
+						lvlupText.setString(lvlText);
+
+						shootCooldown -= shootCooldown / 5;
+						curHP = 1 + lvl / 5;
+					}
+					xpNeeded = 500 * lvl * 1.2;
+					scoretext = (to_string(score) + " / " + to_string(xpNeeded));
+
+					text.setString(scoretext);
+					touched = true;
+
+				}
 			}
 			if (block[i]->alive == true && block[i]->collided(playerHitbox) && playerAlive == true)
 			{
@@ -256,12 +292,13 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 			{
 				pad.setPosition(580, 630);
-				for (int i = 0; i < 42; i++)
+				for (int i = 0; i < 20; i++)
 				{
 					block[i]->alive = false;
 				}
 				spawnCooldown = 2;
 				score = 0;
+				lvl = 1;
 				scoretext = (to_string(score));
 				text.setString(scoretext);
 				playerAlive = true;
@@ -281,31 +318,27 @@ int main()
 
 #pragma endregion
 
-#pragma region Shooting
+#pragma region Moving Bullet
 
-		if (aliveBullet)
+		for (int i = 0; i < 15; i++)
 		{
-			//Move Bullet
-			float projRad = 3.14 / 180 * bullet.getRotation();
-			float x = 8.0f * cos(projRad);
-			float y = 8.0f * sin(projRad);
-
-			if ((bullet.getPosition().y < 0 || bullet.getPosition().y > window.getSize().y))
+			if (bullet[i]->alive == true)
 			{
-				//reversedy *= -1.1;
-				bounceSound.play();
-				aliveBullet = false;
-				canFire = true;
-			}
-			if ((bullet.getPosition().x < 0 || bullet.getPosition().x > window.getSize().x))
-			{
-				//reversedx *= -1.9;
-				bounceSound.play();
-				aliveBullet = false;
-				canFire = true;
+				if ((bullet[i]->b.getPosition().y < 0 || bullet[i]->b.getPosition().y > window.getSize().y))
+				{
+					//reversedy *= -1.1;
+					bounceSound.play();
+					bullet[i]->alive = false;
+				}
+				if ((bullet[i]->b.getPosition().x < 0 || bullet[i]->b.getPosition().x > window.getSize().x))
+				{
+					//reversedx *= -1.9;
+					bounceSound.play();
+					bullet[i]->alive = false;
+				}
 			}
 
-			bullet.move(x * reversedx, y * reversedy);
+			bullet[i]->update(dt);
 		}
 
 #pragma endregion
@@ -321,14 +354,14 @@ int main()
 		if (spawnCooldown <= spawnCooldownTimer && playerAlive)
 		{
 			clock.restart();
-			block[blockIdx]->spawn(rand() % 1200 + 10, 10);
+			block[blockIdx]->spawn(rand() % 1200 + 10, 10, curHP);
 			blockIdx += 1;
 
 			//Cooldown Reducing
 			if (spawnCooldown > 0.5)
-			spawnCooldown -= 0.05;
+			spawnCooldown -= spawnCooldown / 30;
 
-			if (blockIdx >= 29)
+			if (blockIdx >= 20)
 			{
 				blockIdx = 0;
 			}
@@ -336,6 +369,22 @@ int main()
 
 
 #pragma endregion
+
+#pragma region shootCooldown
+
+		bulletElapsedTime = clockShooting.restart();
+		shootCooldownTimer += bulletElapsedTime.asSeconds();
+
+		//printf("%f \n", spawnCooldownTimer);
+		if (shootCooldown <= shootCooldownTimer)
+		{
+			//clockShooting.restart();
+			shootCooldownTimer = 0;
+			canFire = true;
+		}
+
+#pragma endregion
+
 
 
 		//set Center
@@ -358,14 +407,22 @@ int main()
 			//mouse gun
 			if (event.type == sf::Event::MouseButtonPressed && canFire && playerAlive)
 			{
-				shootSound.play();
-				reversedx = 1;
-				reversedy = 1;
-
-				bullet.setPosition(gun.getPosition().x, gun.getPosition().y);
-				bullet.setRotation(gun.getRotation());
-				aliveBullet = true;
 				canFire = false;
+				/*if (shootSound.getStatus() == sf::SoundSource::Playing)
+					shootSound.stop();*/
+
+				shootSound.play();
+				//reversedx = 1;
+				//reversedy = 1;
+
+				for (int i = 0; i < 15; i++)
+				{
+					if (bullet[i]->alive == false)
+					{
+						bullet[i]->shoot(gun.getPosition(), gun.getRotation());
+						i += 16;
+					}
+				}
 
 			}
 		}
@@ -373,24 +430,21 @@ int main()
 		window.clear();
 		window.draw(background);
 
-		//Menu
-
 		//InGame
-
-		if (aliveBullet)
-		{
-			window.draw(bullet);
-		}
-
-
 		if (playerAlive)
 		{
 			window.draw(pad);
 			window.draw(gun);
+			
+			window.draw(text);
+			window.draw(lvlupText);
 		}
 
-		for (int i = 0; i < 42; i++)
+		for (int i = 0; i < 20; i++)
 		{
+			if (i < 15)
+				bullet[i]->draw(window);
+
 			block[i]->draw(window);
 		}
 
@@ -405,7 +459,7 @@ int main()
 			}
 		}
 
-		window.draw(text);
+		
 
 		window.display();
 

@@ -12,7 +12,7 @@ public:
 	//float py;
 	float moveX;
 	float moveY;
-	Particles(sf::Vector2f pos);
+	Particles(sf::Vector2f pos, sf::Color color);
 
 	void update(double dt);
 	void blockdeath(sf::Vector2f pos,float X, float Y);

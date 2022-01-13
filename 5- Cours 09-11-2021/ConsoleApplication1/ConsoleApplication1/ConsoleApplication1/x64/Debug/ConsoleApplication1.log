@@ -1,49 +1,13 @@
-﻿  Block.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(7): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(11): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(13): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(27): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(57): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(58): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(69): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(73): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(77): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\block.cpp(81): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-  Bullet.cpp
-  ConsoleApplication1.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(175): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(178): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(220): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(227): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+﻿  ConsoleApplication1.cpp
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(36): warning C4305: 'initialisation' : troncation de 'double' à 'float'
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(200): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(240): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(256): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(263): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
           with
           [
               T=int
           ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(289): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(324): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(329): warning C4305: '-=' : troncation de 'double' à 'float'
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(345): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(202): warning C4101: 'numstr' : variable locale non référencée
-  Particles.cpp
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\particles.cpp(7): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\particles.cpp(11): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\particles.cpp(19): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-  Utility.cpp
-  Génération de code en cours...
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(357): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+c:\users\quaqu\desktop\cash defender\pinball\hae_gp2_qlejuez\5- cours 09-11-2021\consoleapplication1\consoleapplication1\consoleapplication1\consoleapplication1.cpp(394): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
   ConsoleApplication1.vcxproj -> C:\Users\Quaqu\Desktop\Cash Defender\Pinball\hae_gp2_QLejuez\5- Cours 09-11-2021\ConsoleApplication1\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe

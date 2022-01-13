@@ -2,24 +2,23 @@
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
-/*
+#include "Particles.hpp"
+
 class Bullet {
 public:
 	sf::CircleShape b;
+	bool alive = false;
 
-	std::vector<float>	px;
-	std::vector<float>	py;
+	Particles* parts[5];
 
-	std::vector<float>	dx;
-	std::vector<float>	dy;
+	sf::FloatRect bulletHitbox;
+	sf::Vector2u direction;
 
-	std::vector<bool>	alive;
+	Bullet(float posX, float posY);
 
-	Bullet();
-
-	void create(float px, float py, float dx, float dy);
+	void shoot(sf::Vector2f pos, float angle);
+	void killed();
 	void update(double dt);
 
 	void draw(sf::RenderWindow& win);
 };
-*/

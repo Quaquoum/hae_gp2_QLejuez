@@ -1,19 +1,20 @@
 #include "Particles.hpp"
 
-Particles::Particles(sf::Vector2f pos)
+Particles::Particles(sf::Vector2f pos, sf::Color color)
 {
 	int length = 10;
 	int height = 10;
 	b = sf::RectangleShape(sf::Vector2f(length, height));
 	b.setOutlineThickness(2);
-	b.setFillColor(sf::Color::White);
-	b.setOutlineColor(sf::Color::Black);
+	b.setFillColor(sf::Color::Red);
+	b.setOutlineColor(color);
 	b.setOrigin(sf::Vector2f(length / 2, height / 2));
 	b.setPosition(pos);
 }
 
 void Particles::update(double dt)
 {
+
 	if (alive)
 	{
 		b.move((moveX - 1) * 1.5, (moveY - 1) * 1.5);
@@ -39,6 +40,7 @@ void Particles::draw(sf::RenderWindow & win)
 	if (this == nullptr)
 		return;
 
+	//printf("hey");
 	if (alive)
 	{
 		win.draw(b);
