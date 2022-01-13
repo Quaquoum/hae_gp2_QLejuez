@@ -39,10 +39,11 @@ int main()
 
 	//Block Array
 	Block* block[20];
+	int curHP = 1;
+	int shake = 0;
 
 	//Bullet Array
 	Bullet* bullet[15];
-	int curHP = 1;
 
 
 	//Sound
@@ -134,7 +135,7 @@ int main()
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::Yellow);
 	int score = 0;
-	int xpNeeded;
+	int xpNeeded = 600;
 	sf::String scoretext;
 
 	//Lvl up Text
@@ -179,7 +180,7 @@ int main()
 	float right1 = playerHitbox.left + playerHitbox.width;
 
 #pragma endregion
-
+	sf::Vector2i winPos = window.getPosition();
 	while (window.isOpen())
 	{
 		double dt = tEnterFrame - tExitFrame;
@@ -224,6 +225,7 @@ int main()
 					block[i]->killed();
 					bullet[j]->killed();
 					score += 100;
+					shake = 20;
 
 					//Lvl up
 					if (score >= (500 * lvl * 1.2))
@@ -234,7 +236,7 @@ int main()
 						lvlText = ("lvl : " + to_string(lvl));
 						lvlupText.setString(lvlText);
 
-						shootCooldown -= shootCooldown / 5;
+						shootCooldown -= shootCooldown / 3;
 						curHP = 1 + lvl / 5;
 					}
 					xpNeeded = 500 * lvl * 1.2;
@@ -299,10 +301,12 @@ int main()
 				spawnCooldown = 2;
 				score = 0;
 				lvl = 1;
-				scoretext = (to_string(score));
+				scoretext = (to_string(score) + " / " + to_string(xpNeeded));
 				text.setString(scoretext);
 				playerAlive = true;
 				clock.restart();
+
+
 
 				//Text
 				restartText.setString("Press R to restart");
@@ -358,7 +362,7 @@ int main()
 			blockIdx += 1;
 
 			//Cooldown Reducing
-			if (spawnCooldown > 0.5)
+			if (spawnCooldown > 0.4)
 			spawnCooldown -= spawnCooldown / 30;
 
 			if (blockIdx >= 20)
@@ -426,6 +430,12 @@ int main()
 
 			}
 		}
+
+		if (shake > 0)
+			window.setPosition(winPos + sf::Vector2i(0 + rand() % 5, 0 + rand() % 5));
+		else
+			window.setPosition(winPos);
+		shake--;
 
 		window.clear();
 		window.draw(background);
