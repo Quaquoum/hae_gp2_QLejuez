@@ -27,7 +27,7 @@ int main()
 #pragma region Variables
 
 	//Window
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Untitled Space Game");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Untitled Space Game", sf::Style::Close);
 	window.setVerticalSyncEnabled(true);
 	sf::Vector2i windowPosition = window.getPosition();
 	sf::View view(sf::Vector2f(1280/2, 720/2), sf::Vector2f(300.f, 200.f));
@@ -36,7 +36,7 @@ int main()
 
 	//Time
 	sf::Clock clock;
-	float spawnCooldown = 1.5;
+	float spawnCooldown = 2;
 	float spawnCooldownTimer;
 	float textTimer;
 	sf::Time elapsedTime;
@@ -233,20 +233,20 @@ int main()
 		auto pos = pad.getPosition();
 		if (playerAlive)
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && pad.getPosition().x > 10)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) && pad.getPosition().x > 10)
 			{
 				pad.move(-5, 0);
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && pad.getPosition().x < 1270)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && pad.getPosition().x < 1270)
 			{
 				pad.move(5, 0);
 			}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && pad.getPosition().y > 10)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && pad.getPosition().y > 10)
 			{
 				pad.move(0, -5);
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && pad.getPosition().y < 710)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && pad.getPosition().y < 710)
 			{
 				pad.move(0, 5);
 			}
@@ -260,11 +260,12 @@ int main()
 				{
 					block[i]->alive = false;
 				}
-				float spawnCooldown = 2.5;
+				spawnCooldown = 2;
 				score = 0;
 				scoretext = (to_string(score));
 				text.setString(scoretext);
 				playerAlive = true;
+				clock.restart();
 
 				//Text
 				restartText.setString("Press R to restart");
