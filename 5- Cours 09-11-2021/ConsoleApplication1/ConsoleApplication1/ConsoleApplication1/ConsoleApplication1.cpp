@@ -236,8 +236,8 @@ int main()
 						lvlText = ("lvl : " + to_string(lvl));
 						lvlupText.setString(lvlText);
 
-						shootCooldown -= shootCooldown / 3;
-						curHP = 1 + lvl / 5;
+						shootCooldown -= shootCooldown * 0.2;
+						curHP = 1 + lvl / 4;
 					}
 					xpNeeded = 500 * lvl * 1.2;
 					scoretext = (to_string(score) + " / " + to_string(xpNeeded));
@@ -299,11 +299,16 @@ int main()
 					block[i]->alive = false;
 				}
 				spawnCooldown = 2;
+				shootCooldown = 0.8;
 				score = 0;
 				lvl = 1;
+				xpNeeded = 500 * lvl * 1.2;
+				lvlText = ("lvl : " + to_string(lvl));
 				scoretext = (to_string(score) + " / " + to_string(xpNeeded));
+				lvlupText.setString(lvlText);
 				text.setString(scoretext);
 				playerAlive = true;
+				curHP = 1;
 				clock.restart();
 
 
